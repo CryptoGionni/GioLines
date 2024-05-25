@@ -73,15 +73,16 @@ private static Connection conn = null;
     }
 
 
-	public static void main(String[] args) {
+	// public static void main(String[] args) {
 		
-		try {
-			getConnection();
-			testConnection();
-			closeConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}	
+	// 	try {
+	// 		getConnection();
+	// 		testConnection();
+	// 		closeConnection();
+	// 	} catch (SQLException e) {
+	// 		e.printStackTrace();
+	// 	}	
 
-	}
+	// }
+
 }
