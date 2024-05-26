@@ -13,6 +13,15 @@ import exception.DBConnectionException;
 import exception.OperationException;
 
 public class GestioneTrasporto {
+
+    private static GestioneTrasporto gC = null;
+    public static GestioneTrasporto getInstance() 
+	{ 
+		if (gC == null) 
+			gC = new GestioneTrasporto(); 
+
+		return gC; 
+	}
     
     public void acquistaBigliettoViaWeb(
         String CITTAPARTENZA,
@@ -23,7 +32,7 @@ public class GestioneTrasporto {
         int NUMEROSEDILI,
         int NUMEROBAGAGLI,
         float DIMENSIONEBAGAGLIO
-    )throws OperationException{
+        )throws OperationException{
 
         int idCorsa = 0;
         EntityCorsa ec = null;
@@ -42,7 +51,7 @@ public class GestioneTrasporto {
 				throw new OperationException("Tratta non disponibile");
 			}
             ec = CorsaDAO.readCorsa(idCorsa);
-
+            
             //assert ORARIOPARTENZA <= ec.getOrarioPartenza() || PREZZOBIGLIETTIMASSIMO >= ec.getPrezzoBiglietto() : "Corsa non compatibile";            
             if(ORARIOPARTENZA.after(ec.getOrarioPartenza()) || PREZZOBIGLIETTIMASSIMO < ec.getPrezzoBiglietto()) {
                 throw new OperationException("Corsa non compatibile");
@@ -64,6 +73,7 @@ public class GestioneTrasporto {
                 throw new OperationException("Dimensione bagaglio non rispettata");
             }
 
+            System.out.println("scemo chi legge");
 
         //}catch(AssertionError e) {
             //System.out.println(e.getMessage());
@@ -92,9 +102,8 @@ public class GestioneTrasporto {
 
     }
 
-
-    private void invioMail(){}
-    private void applicaSupplemento(){}
-    private void registrazioneInternaBiglietto(){}
+    // private void invioMail(){}
+    // private void applicaSupplemento(){}
+    // private void registrazioneInternaBiglietto(){}
 
 }
