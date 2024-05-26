@@ -1,0 +1,67 @@
+CREATE TABLE Impiegato (
+    id IDENTITY,
+    password VARCHAR(255)
+);
+
+CREATE TABLE Biglietto(
+    numeroBiglietto IDENTITY,
+    idImpiegato SMALLINT,
+    oraEmissione TIME,
+    dataEmissione DATE,
+    presenzaBagaglio BOOLEAN,
+    FOREIGN KEY(idImpiegato) REFERENCES Impiegato(id)
+);
+
+CREATE TABLE Corsa(
+    id IDENTITY,
+    dataPartenza DATE,
+    orarioPartenza TIME,
+    orarioArrivo TIME,
+    prezzoBiglietto FLOAT(2)
+);
+
+CREATE TABLE Autobus(
+    id IDENTITY,
+    sediliOccupati SMALLINT,
+    bagagliOccupati SMALLINT,
+    idCorsa SMALLINT,
+    sediliMax SMALLINT,
+    bagagliMax SMALLINT,
+    dimensioneBagaglio FLOAT(2),
+    FOREIGN KEY(idCorsa) REFERENCES Corsa(id)
+);
+
+CREATE TABLE Tratta(
+    numeroTratta IDENTITY,
+    idCorsa SMALLINT,
+    cittàPartenza VARCHAR(255),
+    cittàArrivo VARCHAR(255),
+    FOREIGN KEY(idCorsa) REFERENCES Corsa(id)
+);
+
+##########################################
+
+@loop 10 INSERT INTO IMPIEGATO(password) VALUES ('alfa');
+SELECT TOP 3 * FROM IMPIEGATO;
+
+@loop 10 INSERT INTO BIGLIETTO VALUES (1,now(),now(),1);
+SELECT TOP 3 * FROM BIGLIETTO;
+
+@loop 10 INSERT INTO AUTOBUS(SEDILIOCCUPATI, BAGAGLIOCCUPATI, IDCORSA, SEDILIMAX, BAGAGLIMAX, DIMENSIONEBAGAGLIO) VALUES (2,3,1,3,4,34.12);
+SELECT TOP 5 * FROM AUTOBUS;
+
+SELECT * FROM 
+AUTOBUS JOIN CORSA 
+ON AUTOBUS.IDCORSA = CORSA.ID;
+
+@loop 10 INSERT INTO CORSA(DATAPARTENZA, ORARIOPARTENZA, ORARIOARRIVO, PREZZOBIGLIETTO) VALUES (now(), now(), now(), 12.34);
+
+SELECT * FROM CORSA;
+INSERT INTO CORSA(dataPartenza, orarioPartenza, orarioArrivo, prezzoBiglietto) VALUES (now(),now(),now(),12.34);
+SELECT * FROM CORSA;
+INSERT INTO TRATTA(idCorsa, cittàPartenza, cittàArrivo) VALUES (1,'Napoli','Roma');
+SELECT idCorsa FROM Tratta WHERE cittàPartenza='Napoli' AND cittàArrivo='Roma';
+
+SELECT * FROM AUTOBUS;
+SELECT * FROM TRATTA;
+SELECT * FROM CORSA;

@@ -1,5 +1,6 @@
 package control;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import database.TrattaDAO;  //fornisce la funzione readTratta
@@ -23,7 +24,7 @@ public class GestioneTrasporto {
 		return gC; 
 	}
     
-    public void acquistaBigliettoViaWeb(
+    public ArrayList<String> acquistaBigliettoViaWeb(
         String CITTAPARTENZA,
         String CITTAARRIVO,
         Date ORARIOPARTENZA,
@@ -34,7 +35,12 @@ public class GestioneTrasporto {
         float DIMENSIONEBAGAGLIO
         )throws OperationException{
 
-        int idCorsa = 0;
+
+        ArrayList<String> proposta = new ArrayList<String>();
+
+
+        int idCorsa = 0, supplemento = 0;
+        float prezzoTotale = 0;
         EntityCorsa ec = null;
         EntityAutobus ea = null;
 
@@ -58,25 +64,34 @@ public class GestioneTrasporto {
             }
             ea = AutobusDAO.readAutobus(idCorsa);
 
-            //assert NUMEROSEDILI+ea.getSediliOccupati()<=ea.getSediliMax() : Posti sedili disponibili insufficienti;
+            //assert NUMEROSEDILI+ea.getSediliOccupati()<=ea.getSediliMax() : "Posti sedili disponibili insufficienti";
             if(NUMEROSEDILI+ea.getSediliOccupati()>ea.getSediliMax()) {
                 throw new OperationException("Posti sedili disponibili insufficienti");
             }
 
-            //assert NUMEROBAGAGLI+ea.getBagagliOccupati()<=ea.getBagagliMax() : Posti bagagli disponibili insufficienti;
+            //assert NUMEROBAGAGLI+ea.getBagagliOccupati()<=ea.getBagagliMax() : "Posti bagagli disponibili insufficienti";
             if(NUMEROBAGAGLI+ea.getBagagliOccupati()>ea.getBagagliMax()) {
                 throw new OperationException("Posti bagagli disponibili insufficienti");
             }
 
-            //assert DIMENSIONEBAGAGLIO <= ea.getDimensioneBagaglio() : Dimensione bagaglio non rispettata;
+            //assert DIMENSIONEBAGAGLIO <= ea.getDimensioneBagaglio() : "Dimensione bagaglio non rispettata";
             if(DIMENSIONEBAGAGLIO > ea.getDimensioneBagaglio()) {
                 throw new OperationException("Dimensione bagaglio non rispettata");
             }
 
-            System.out.println("scemo chi legge");
+            //calcolo prezzo dell'ordine
+            for(int i = 1; i<=NUMEROBAGAGLI; i++){
+                supplemento += supplemento + applicaSupplemento();
+            }
+            prezzoTotale = calcolaPrezzoFinale(ec.getPrezzoBiglietto(), NUMEROSEDILI, supplemento);
 
-        //}catch(AssertionError e) {
-            //System.out.println(e.getMessage());
+            //preparazione ArrayList di stringhe di ritorno al boundary
+            proposta.set(0, String.valueOf(idCorsa));            
+            proposta.set(1, String.valueOf(ec.getOrarioPartenza()));
+            proposta.set(2, String.valueOf(ec.getOrarioArrivo()));           
+            proposta.set(3, String.valueOf(prezzoTotale));
+            return proposta;
+
         }catch(DBConnectionException dbEx) {
             throw new OperationException("\nRiscontrato problema interno applicazione!\n");
         }catch(DAOException ex) {
@@ -102,8 +117,17 @@ public class GestioneTrasporto {
 
     }
 
-    // private void invioMail(){}
-    // private void applicaSupplemento(){}
+    private int applicaSupplemento(){
+        return 5;
+    }
+
+    private float calcolaPrezzoFinale(float prezzoSingolo, int numeroBiglietti, int supplementoBagagli){
+        return (prezzoSingolo*numeroBiglietti)+supplementoBagagli;
+    }
+
+
+
     // private void registrazioneInternaBiglietto(){}
 
+    // private void invioMail(){}
 }

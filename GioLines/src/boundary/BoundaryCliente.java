@@ -8,6 +8,8 @@ import java.util.Scanner;
 import control.GestioneTrasporto;
 
 import exception.OperationException;
+
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 
 public class BoundaryCliente {
@@ -43,16 +45,7 @@ public class BoundaryCliente {
 	}
 
     private static void acquistaBigliettoViaWeb() {
-		/*
-		String CITTAPARTENZA,
-        String CITTAARRIVO,
-        Date ORARIOPARTENZA,
-        String MAIL,
-        float PREZZOBIGLIETTIMASSIMO,
-        int NUMEROSEDILI,
-        int NUMEROBAGAGLI,
-        float DIMENSIONEBAGAGLIO
-		 */
+
 		String CITTAPARTENZA=null, CITTAARRIVO=null, MAIL=null;
 		Time ORARIOPARTENZA = null;
 		int NUMEROSEDILI=0, NUMEROBAGAGLI=0;
@@ -60,7 +53,7 @@ public class BoundaryCliente {
 
     	boolean inputValido = false;
 		GestioneTrasporto gestioneTraspostoIstance = GestioneTrasporto.getInstance();
-
+		ArrayList<String> propostaTrovata = null;
 
 		try {
 
@@ -143,7 +136,7 @@ public class BoundaryCliente {
 				}
 			}
     
-			gestioneTraspostoIstance.acquistaBigliettoViaWeb(
+			propostaTrovata = gestioneTraspostoIstance.acquistaBigliettoViaWeb(
 				CITTAPARTENZA, 
 				CITTAARRIVO,
 				ORARIOPARTENZA,
@@ -154,6 +147,23 @@ public class BoundaryCliente {
 				DIMENSIONEBAGAGLIO
 				);
 
+
+			System.out.println("Ecco l'autobus perfetto per te!" +
+								"\nAutobus " + CITTAPARTENZA + "-" + CITTAARRIVO + " numero: " + propostaTrovata.get(0) + 
+								"\nOrario di partenza: " + propostaTrovata.get(1) +
+								"\nOrario di arrivo: " + propostaTrovata.get(2) +
+								"\nCon " + NUMEROSEDILI + " posti e " + NUMEROBAGAGLI + " bagagli" +
+								"\nAl prezzo di: " + propostaTrovata.get(3) 
+								);
+
+			System.out.println("Digita 'S' per confermare l'acquisto all'indirizzo " + MAIL + "\noppure premere qualunque altro carattere per annullare..");
+			String conferma = scan.nextLine();
+
+			if (!conferma.equals("S") && !conferma.equals("s")) {
+				System.out.println("Operazione annullata...\n");
+				return;
+			}
+			System.out.println("ok");
 
 
 		} catch (OperationException oE) {
