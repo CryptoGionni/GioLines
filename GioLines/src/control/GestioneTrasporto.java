@@ -83,13 +83,13 @@ public class GestioneTrasporto {
                 throw new OperationException("Dimensione bagaglio non rispettata");
             }
 
-            //calcolo prezzo dell'ordine            
+            /* calcolo prezzo dell'ordine */
             prezzoTotale = calcolaPrezzoTotale(ec.getPrezzoBiglietto(), NUMEROSEDILI);
             if(NUMEROBAGAGLI>0){
                 prezzoTotale += applicaSupplemento(NUMEROBAGAGLI);
             }
 
-            //preparazione ArrayList di stringhe di ritorno al boundary
+            /* preparazione ArrayList di stringhe di ritorno al boundary */
             proposta.set(0, String.valueOf(idCorsa));             
             proposta.set(1, String.valueOf(ec.getOrarioPartenza())); 
             proposta.set(2, String.valueOf(ec.getOrarioArrivo()));           
@@ -106,6 +106,22 @@ public class GestioneTrasporto {
     }
 
 
+    public void confermaAcquisto(ArrayList<String> propostaConfermata, int numSedili, int numBagagli, String mail)throws OperationException{
+
+        try{
+
+            System.out.println(setNumeroSediliDisponibili(numSedili, numBagagli, propostaConfermata.get(0)));
+            
+            // registrazioneInternaBiglietto();
+
+            // invioMail();
+
+        }catch(Exception e) {
+            throw new OperationException("\nRiscontrato problema interno applicazione!\n");
+        }
+        
+    }
+
 
     public void vendiBiglietto(
         String CITTAPARTENZA,
@@ -120,6 +136,15 @@ public class GestioneTrasporto {
 
 
     }
+
+    public void confermaVendita(){
+
+
+        
+    }
+
+
+
 
     private int applicaSupplemento(int N){
         int res = 0;
@@ -138,4 +163,21 @@ public class GestioneTrasporto {
     // private void registrazioneInternaBiglietto(){}
 
     // private void invioMail(){}
+
+    private int setNumeroSediliDisponibili(int numSedili_, int numBagagli_, String idCorsaStringa_)throws OperationException{
+
+        EntityAutobus ea = null;
+
+        try{
+            ea = AutobusDAO.readAutobus(Integer.parseInt(idCorsaStringa_));
+
+            return AutobusDAO.updateAutobus(ea.getBagagliOccupati() + numBagagli_, ea.getSediliOccupati() + numSedili_ , idCorsaStringa_);
+
+        }catch(DBConnectionException dbEx) {
+            throw new OperationException("\nRiscontrato problema interno applicazione!\n");
+        }catch(DAOException ex) {
+            throw new OperationException("\nOps, qualcosa e' andato storto..\n");
+        }
+    }
+
 }

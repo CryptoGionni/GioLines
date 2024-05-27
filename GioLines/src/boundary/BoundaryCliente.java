@@ -4,6 +4,7 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import control.GestioneTrasporto;
 
@@ -23,7 +24,7 @@ public class BoundaryCliente {
 		
 		while(!exit) {
 
-			System.out.println("Cliente:\n");
+			System.out.println("\n************* Cliente: *************\n");
 			System.out.println("1. Acquista biglietto via web");
 			System.out.println("2. Esci");
 			
@@ -33,7 +34,7 @@ public class BoundaryCliente {
 				acquistaBigliettoViaWeb();
 			} else if(op.equals("2")){
 				exit = true;
-				System.out.println("Uscita!");
+				System.out.println("Uscita...");
 			}else{
 				System.out.println("Operazione non disponibile\n");
 			}
@@ -56,7 +57,8 @@ public class BoundaryCliente {
 		ArrayList<String> propostaTrovata = null;
 
 		try {
-
+			
+			System.out.println("\n************* Inserisci parametri di ricerca *************");
 			// /* acquisizione input CITTAPARTENZA e CITTAARRIVO */
 			// inputValido = false;
 			// while (!inputValido) {
@@ -160,7 +162,7 @@ public class BoundaryCliente {
 				2
 				);
 
-
+			/* stampa della proposta trovata */
 			System.out.println("\n************* Ecco l'autobus perfetto per te! *************" +
 								"\nAutobus " + CITTAPARTENZA + "-" + CITTAARRIVO + " numero: " + propostaTrovata.get(0) + 
 								"\nOrario di partenza: " + propostaTrovata.get(1) +
@@ -172,14 +174,46 @@ public class BoundaryCliente {
 			System.out.println("\n************* Confermi? *************");
 			System.out.println("Digita 'S' per confermare l'acquisto all'indirizzo " + MAIL + 
 								"\noppure \nDigita qualunque altro carattere per annullare");
-			String conferma = scan.nextLine();
+			String confermaProposta = scan.nextLine();
 
-			if (!conferma.equals("S") && !conferma.equals("s")) {
+			if (!confermaProposta.equals("S") && !confermaProposta.equals("s")) {
 				System.out.println("Acquisto annullato...\n");
 				return;
 			}
-			System.out.println("ok");
 
+			inputValido = false;
+			while (!inputValido) {
+				System.out.println("\nInserire il numero di carta:");
+
+				String numeroCarta = scan.nextLine();
+
+				try {
+					Long.parseLong(numeroCarta);
+
+					if (numeroCarta.length() == 16) {
+						inputValido = true;
+					} else {
+						System.out.println("Errore inserimento carta, deve essere di 16 cifre..");
+					}
+				} catch (NumberFormatException e) {
+					System.out.println("Errore inserimento carta, deve contenere solo numeri..");
+				}
+			}
+
+
+			System.out.println("Pagamento in corso...");
+			TimeUnit.SECONDS.sleep(3);
+			System.out.println("Pagamento effettuato!");
+
+			gestioneTraspostoIstance.confermaAcquisto(propostaTrovata, NUMEROSEDILI, NUMEROBAGAGLI, MAIL);
+			
+			System.out.println("\nInvio biglietti in corso...");
+			TimeUnit.SECONDS.sleep(2);
+			System.out.println("Biglietti inviati sulla mail " + MAIL);
+
+			System.out.println("\n************* Acquisto completato! *************");
+			System.out.println();
+			System.out.println();
 
 		} catch (OperationException oE) {
 			System.out.println(oE.getMessage());
