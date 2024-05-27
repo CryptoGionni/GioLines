@@ -72,7 +72,8 @@ private static Connection conn = null;
 
     }
 
-
+	
+	/*FUNZIONE DI TEST: comunicazione tra control e boundary*/
 	// public static void main(String[] args) {
 		
 	// 	try {

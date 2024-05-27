@@ -37,9 +37,13 @@ public class GestioneTrasporto {
 
 
         ArrayList<String> proposta = new ArrayList<String>();
+        proposta.add("0");
+        proposta.add("0");
+        proposta.add("0");
+        proposta.add("0");
 
 
-        int idCorsa = 0, supplemento = 0;
+        int idCorsa = 0;
         float prezzoTotale = 0;
         EntityCorsa ec = null;
         EntityAutobus ea = null;
@@ -79,17 +83,17 @@ public class GestioneTrasporto {
                 throw new OperationException("Dimensione bagaglio non rispettata");
             }
 
-            //calcolo prezzo dell'ordine
-            for(int i = 1; i<=NUMEROBAGAGLI; i++){
-                supplemento += supplemento + applicaSupplemento();
+            //calcolo prezzo dell'ordine            
+            prezzoTotale = calcolaPrezzoTotale(ec.getPrezzoBiglietto(), NUMEROSEDILI);
+            if(NUMEROBAGAGLI>0){
+                prezzoTotale += applicaSupplemento(NUMEROBAGAGLI);
             }
-            prezzoTotale = calcolaPrezzoFinale(ec.getPrezzoBiglietto(), NUMEROSEDILI, supplemento);
 
             //preparazione ArrayList di stringhe di ritorno al boundary
-            proposta.set(0, String.valueOf(idCorsa));            
-            proposta.set(1, String.valueOf(ec.getOrarioPartenza()));
+            proposta.set(0, String.valueOf(idCorsa));             
+            proposta.set(1, String.valueOf(ec.getOrarioPartenza())); 
             proposta.set(2, String.valueOf(ec.getOrarioArrivo()));           
-            proposta.set(3, String.valueOf(prezzoTotale));
+            proposta.set(3, String.valueOf(prezzoTotale)); 
             return proposta;
 
         }catch(DBConnectionException dbEx) {
@@ -117,12 +121,16 @@ public class GestioneTrasporto {
 
     }
 
-    private int applicaSupplemento(){
-        return 5;
+    private int applicaSupplemento(int N){
+        int res = 0;
+        for(int i = 1; i<=N; i++){
+            res = res + 5;
+        }
+        return res;
     }
 
-    private float calcolaPrezzoFinale(float prezzoSingolo, int numeroBiglietti, int supplementoBagagli){
-        return (prezzoSingolo*numeroBiglietti)+supplementoBagagli;
+    private float calcolaPrezzoTotale(float prezzoSingolo, int numeroBiglietti){
+        return (prezzoSingolo*numeroBiglietti);
     }
 
 

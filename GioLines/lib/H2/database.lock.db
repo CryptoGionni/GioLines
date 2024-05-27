@@ -1,6 +1,6 @@
 #FileLock
-#Sun May 26 21:07:17 CEST 2024
-hostName=DESKTOP-3S211H5
-id=18fb43e9f4a7465c1694a8ff44c65af7029d0cfee5b
+#Mon May 27 18:31:38 CEST 2024
+hostName=DESKTOP-3S211H5.homenet.telecomitalia.it
+id=18fbae4a5e631644b2518aec21465b48949bfa7e3bc
 method=file
-server=192.168.82.209\:49812
+server=192.168.1.211\:65464
