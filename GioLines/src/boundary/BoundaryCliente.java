@@ -65,10 +65,10 @@ public class BoundaryCliente {
 			while (!inputValido) {
 				try {
 					System.out.println("Inserisci una città di partenza:");
-					CITTAPARTENZA = scan.nextLine();
+					CITTAPARTENZA = scan.nextLine().toUpperCase();
 
 					System.out.println("Inserisci una città di arrivo:");
-					CITTAARRIVO = scan.nextLine();
+					CITTAARRIVO = scan.nextLine().toUpperCase();
 
 					inputValido = true;
 				}catch(InputMismatchException e){
@@ -117,7 +117,7 @@ public class BoundaryCliente {
 					System.out.println("Inserisci il numero di posti da acquistare:");
 					NUMEROSEDILI = Integer.parseInt(scan.nextLine());
 
-					System.out.println("Inserisci il numero di bagagli da portare:");
+					System.out.println("Inserisci il numero di bagagli da portare \n(max 1 per persona, con supplemento di 5 euro/cad):");
 					NUMEROBAGAGLI = Integer.parseInt(scan.nextLine());
 
 					inputValido = true;
@@ -131,7 +131,7 @@ public class BoundaryCliente {
 			inputValido = false;
 			while (!inputValido) {
 				try {
-					System.out.println("Inserisci un prezzo dei biglietti massimo:");
+					System.out.println("Inserisci un prezzo massimo per un singolo biglietto:");
 					PREZZOBIGLIETTIMASSIMO = Float.parseFloat(scan.nextLine());
 
 					System.out.println("Inserisci la dimensione del bagaglio:");
@@ -171,14 +171,15 @@ public class BoundaryCliente {
 			System.out.println("\n************* Ecco l'autobus perfetto per te! *************" +
 								"\nAutobus " + CITTAPARTENZA + "-" + CITTAARRIVO + " numero: " + propostaTrovata.get(0) + 
 								"\nPer il giorno: " + DATAPARTENZA +
-								"\nOrario di partenza: " + propostaTrovata.get(1) +
-								"\nOrario di arrivo: " + propostaTrovata.get(2) +
-								"\nPosti: " + NUMEROSEDILI + "\nBagagli: " + NUMEROBAGAGLI +
-								"\nAl prezzo di: " + propostaTrovata.get(3) + " euro"
+								"\nOrario di partenza: " + propostaTrovata.get(1).substring(0,5) +
+								"\nOrario di arrivo: " + propostaTrovata.get(2).substring(0,5) +
+								"\nPosti: " + NUMEROSEDILI + "(" + propostaTrovata.get(4) + "euro/cad)" +
+								"\nBagagli: " + NUMEROBAGAGLI + "(5 euro/cad)" +
+								"\nAl prezzo di: " + propostaTrovata.get(3) + " euro "
 								);
 
 			System.out.println("\n************* Confermi? *************");
-			System.out.println("Digita 'S' per confermare l'acquisto all'indirizzo " + MAIL + 
+			System.out.println("Digita 's' per confermare l'acquisto all'indirizzo " + MAIL + 
 								"\noppure \nDigita qualunque altro carattere per annullare");
 			String confermaProposta = scan.nextLine();
 
@@ -224,6 +225,7 @@ public class BoundaryCliente {
 			System.out.println(oE.getMessage());
 			System.out.println("Riprovare...\n");
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("Unexpected exception, riprovare...");
 			System.out.println();
 		}

@@ -32,7 +32,7 @@ public class TrattaDAO {
 				if(result.next()) {
 					idCorsa = result.getInt(1);
 				} else{
-					System.out.println("Tratta insesistente");
+					System.out.println("Tratta inesistente");
 				}
 				
 

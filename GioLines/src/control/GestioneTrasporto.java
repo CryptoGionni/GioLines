@@ -49,6 +49,7 @@ public class GestioneTrasporto {
         proposta.add("0");
         proposta.add("0");
         proposta.add("0");
+        proposta.add("0");        
         proposta.add("0");
 
 
@@ -103,6 +104,7 @@ public class GestioneTrasporto {
             proposta.set(1, String.valueOf(ec.getOrarioPartenza())); 
             proposta.set(2, String.valueOf(ec.getOrarioArrivo()));           
             proposta.set(3, String.valueOf(prezzoTotale)); 
+            proposta.set(4, String.valueOf(ec.getPrezzoBiglietto())); //extra value
 
             /* destroy delle entità di appoggio */
             ec = null;
@@ -304,7 +306,7 @@ public class GestioneTrasporto {
 
             ea = AutobusDAO.readAutobus(Integer.parseInt(idCorsaStringa_));
 
-            return AutobusDAO.updateAutobus(ea.getBagagliOccupati() + numBagagli_, ea.getSediliOccupati() + numSedili_ , idCorsaStringa_);
+            return AutobusDAO.updateAutobus(ea.getSediliOccupati() + numSedili_ , ea.getBagagliOccupati() + numBagagli_, idCorsaStringa_);
 
         }catch(DBConnectionException dbEx) {
             throw new OperationException("\nRiscontrato problema interno applicazione [ssd]!\n");
