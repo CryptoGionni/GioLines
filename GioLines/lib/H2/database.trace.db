@@ -299,3 +299,41 @@ org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "TIME to DATE
 org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "TIME to DATE" [22018-212]
 2024-05-25 22:46:03 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "TIME to REAL" [22018-212]
+2024-05-27 19:51:35 jdbc[33]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TEST" not found; SQL statement:
+UPDATE TEST SET SEDILIOCCUPATI = 5 AND BAGAGLIOCCUPATI = 2 WHERE ID=1 [42102-212]
+2024-05-28 07:47:40 jdbc[5]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Column count does not match; SQL statement:
+INSERT INTO BIGLIETTO VALUES (1,now(),now(),1) [21002-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:502)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.message.DbException.get(DbException.java:188)
+	at org.h2.command.dml.Insert.doPrepare(Insert.java:295)
+	at org.h2.command.dml.DataChangeStatement.prepare(DataChangeStatement.java:37)
+	at org.h2.command.Parser.prepareCommand(Parser.java:574)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:631)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:554)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1116)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:237)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+2024-05-28 08:39:31 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO BIGLIETTO(IDIMPIEGATO , ORAEMISSIONE , DATAEMISSIONE , PRESENZABAGAGLIO)  VALUES(77,11[*]:22,2021-05-28,TRUE);"; expected "[, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, ,, )"; SQL statement:
+INSERT INTO BIGLIETTO(IDIMPIEGATO , ORAEMISSIONE , DATAEMISSIONE , PRESENZABAGAGLIO)  VALUES(77,11:22,2021-05-28,TRUE); [42001-212]
+2024-05-28 08:39:55 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO BIGLIETTO(IDIMPIEGATO , ORAEMISSIONE , DATAEMISSIONE , PRESENZABAGAGLIO)  VALUES(77,11[*]:22,2021-05-28,TRUE);"; expected "[, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, ,, )"; SQL statement:
+INSERT INTO BIGLIETTO(IDIMPIEGATO , ORAEMISSIONE , DATAEMISSIONE , PRESENZABAGAGLIO)  VALUES(77,11:22,2021-05-28,TRUE); [42001-212]
+2024-05-28 08:41:08 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO BIGLIETTO VALUES(77,11[*]:22,2021-05-28,TRUE);"; expected "[, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, ,, )"; SQL statement:
+INSERT INTO BIGLIETTO VALUES(77,11:22,2021-05-28,TRUE); [42001-212]
+2024-05-28 08:41:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO BIGLIETTO VALUES( 77 , 11[*]:22:00 , 2021-05-28 , TRUE );"; expected "[, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, ,, )"; SQL statement:
+INSERT INTO BIGLIETTO VALUES( 77 , 11:22:00 , 2021-05-28 , TRUE ); [42001-212]

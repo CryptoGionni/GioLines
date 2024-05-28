@@ -1,13 +1,22 @@
 package control;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate; // import the LocalDate class
+import java.time.LocalTime; // import the LocalTime class
+import java.time.temporal.ChronoUnit;
 
+import database.BigliettoDAO; //fornisce la updateBiglietto
 import database.TrattaDAO;  //fornisce la funzione readTratta
 import database.CorsaDAO;   //fornisce la funzione readCorsa
-import database.AutobusDAO; //fornisce la funzione readAutobus
+import database.AutobusDAO; //fornisce la funzione readAutobus e updateAutobus
 import entity.EntityCorsa;  //fornisce il tipo EntityCorsa
 import entity.EntityAutobus;  //fornisce il tipo EntityAutobus
+
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import exception.DAOException;
 import exception.DBConnectionException;
@@ -27,7 +36,7 @@ public class GestioneTrasporto {
     public ArrayList<String> acquistaBigliettoViaWeb(
         String CITTAPARTENZA,
         String CITTAARRIVO,
-        Date ORARIOPARTENZA,
+        Time ORARIOPARTENZA,
         String MAIL,
         float PREZZOBIGLIETTIMASSIMO,
         int NUMEROSEDILI,
@@ -94,12 +103,17 @@ public class GestioneTrasporto {
             proposta.set(1, String.valueOf(ec.getOrarioPartenza())); 
             proposta.set(2, String.valueOf(ec.getOrarioArrivo()));           
             proposta.set(3, String.valueOf(prezzoTotale)); 
+
+            /* destroy delle entità di appoggio */
+            ec = null;
+            ea = null;
+
             return proposta;
 
         }catch(DBConnectionException dbEx) {
-            throw new OperationException("\nRiscontrato problema interno applicazione!\n");
+            throw new OperationException("\nRiscontrato problema interno applicazione [ab]!\n");
         }catch(DAOException ex) {
-            throw new OperationException("\nOps, qualcosa e' andato storto..\n");
+            throw new OperationException("\nOps, qualcosa e' andato storto...\n");
         }
         
 
@@ -110,14 +124,26 @@ public class GestioneTrasporto {
 
         try{
 
-            System.out.println(setNumeroSediliDisponibili(numSedili, numBagagli, propostaConfermata.get(0)));
+            setNumeroSediliDisponibili(numSedili, numBagagli, propostaConfermata.get(0));            
             
-            // registrazioneInternaBiglietto();
+            for(int i = 1; i<=numBagagli; i++){
+                registrazioneInternaBiglietto(String.valueOf(LocalDate.now()),String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)),42,true);
+            }
 
-            // invioMail();
+            for(int i = 1; i<=(numSedili-numBagagli); i++){
+                registrazioneInternaBiglietto(String.valueOf(LocalDate.now()),String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)),42,false);
+            }
 
-        }catch(Exception e) {
-            throw new OperationException("\nRiscontrato problema interno applicazione!\n");
+            invioMail(propostaConfermata.get(0), propostaConfermata.get(1), propostaConfermata.get(2), propostaConfermata.get(3), numSedili, numBagagli, mail);
+
+        }catch(DBConnectionException dbEx) {
+            throw new OperationException("\nErrore connessione DB!\n");
+        }catch(DAOException ex) {
+            throw new OperationException("\nOperazione DAO fallita\n");
+        }catch(OperationException e) {
+            throw new OperationException("\nRiscontrato problema interno applicazione [ca]!\n");
+        }catch(ParseException pEx){
+            throw new OperationException("\nErrore Time...\n");
         }
         
     }
@@ -160,23 +186,42 @@ public class GestioneTrasporto {
 
 
 
-    // private void registrazioneInternaBiglietto(){}
+    private void registrazioneInternaBiglietto(String data, String ora, int impiegato, boolean bagaglio)throws DBConnectionException, DAOException, OperationException, ParseException{
+        try{
+            Time t = new Time(new SimpleDateFormat("HH:mm").parse(ora).getTime());
+            Date d = Date.valueOf(data);
 
-    // private void invioMail(){}
+            BigliettoDAO.updateBiglietto(d,t,impiegato,bagaglio);
+
+        }catch(DBConnectionException dbEx) {
+            throw new DBConnectionException("\nRiscontrato problema interno applicazione [ri]!\n");
+        }catch(DAOException ex) {
+            throw new DAOException("\nOps, qualcosa e' andato storto...\n");
+        }catch(ParseException pEx){
+            throw new OperationException("\nErrore Time...\n");
+        }
+    }
+
+    private int invioMail(String id, String oraP, String oraA, String prezzo, int nS, int nB, String m){
+
+        return 1;
+
+    }
 
     private int setNumeroSediliDisponibili(int numSedili_, int numBagagli_, String idCorsaStringa_)throws OperationException{
 
         EntityAutobus ea = null;
 
         try{
+
             ea = AutobusDAO.readAutobus(Integer.parseInt(idCorsaStringa_));
 
             return AutobusDAO.updateAutobus(ea.getBagagliOccupati() + numBagagli_, ea.getSediliOccupati() + numSedili_ , idCorsaStringa_);
 
         }catch(DBConnectionException dbEx) {
-            throw new OperationException("\nRiscontrato problema interno applicazione!\n");
+            throw new OperationException("\nRiscontrato problema interno applicazione [ssd]!\n");
         }catch(DAOException ex) {
-            throw new OperationException("\nOps, qualcosa e' andato storto..\n");
+            throw new OperationException("\nOps, qualcosa e' andato storto...\n");
         }
     }
 
