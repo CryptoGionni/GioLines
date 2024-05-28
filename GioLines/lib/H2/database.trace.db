@@ -337,3 +337,88 @@ INSERT INTO BIGLIETTO VALUES(77,11:22,2021-05-28,TRUE); [42001-212]
 2024-05-28 08:41:38 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO BIGLIETTO VALUES( 77 , 11[*]:22:00 , 2021-05-28 , TRUE );"; expected "[, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, ,, )"; SQL statement:
 INSERT INTO BIGLIETTO VALUES( 77 , 11:22:00 , 2021-05-28 , TRUE ); [42001-212]
+2024-05-28 08:42:17 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO BIGLIETTO VALUES( 77 , 11[*]:22:00 , 2021-05-28 , TRUE )"; expected "[, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, ,, )"; SQL statement:
+INSERT INTO BIGLIETTO VALUES( 77 , 11:22:00 , 2021-05-28 , TRUE ) [42001-212]
+2024-05-28 08:42:33 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO BIGLIETTO(IDIMPIEGATO , ORAEMISSIONE , DATAEMISSIONE , PRESENZABAGAGLIO) VALUES( 77 , 11[*]:22:00 , 2021-05-28 , TRUE )"; expected "[, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, ,, )"; SQL statement:
+INSERT INTO BIGLIETTO(IDIMPIEGATO , ORAEMISSIONE , DATAEMISSIONE , PRESENZABAGAGLIO) VALUES( 77 , 11:22:00 , 2021-05-28 , TRUE ) [42001-212]
+2024-05-28 08:43:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO BIGLIETTO(IDIMPIEGATO , ORAEMISSIONE , DATAEMISSIONE , PRESENZABAGAGLIO) VALUES( 77 , 11[*]:22:00 , 2021-05-28 , TRUE )"; expected "[, ::, AT, FORMAT, *, /, %, +, -, ||, NOT, IS, ILIKE, REGEXP, AND, OR, ,, )"; SQL statement:
+INSERT INTO BIGLIETTO(IDIMPIEGATO , ORAEMISSIONE , DATAEMISSIONE , PRESENZABAGAGLIO) VALUES( 77 , 11:22:00 , 2021-05-28 , TRUE ) [42001-212]
+2024-05-28 08:43:36 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "11.22.00"; SQL statement:
+INSERT INTO BIGLIETTO(IDIMPIEGATO , ORAEMISSIONE , DATAEMISSIONE , PRESENZABAGAGLIO) VALUES( 77 , 11.22.00 , 2021-05-28 , TRUE ) [22018-212]
+2024-05-28 08:43:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "-11 (BIGLIETTO: ""ORAEMISSIONE"" TIME)"; SQL statement:
+INSERT INTO BIGLIETTO(IDIMPIEGATO , ORAEMISSIONE , DATAEMISSIONE , PRESENZABAGAGLIO) VALUES( 77 , 11-22-00 , 2021-05-28 , TRUE ) [22018-212]
+2024-05-28 09:09:34 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "BIGLIETTOWHERE" not found; SQL statement:
+DELETE FROM BIGLIETTOWHERE IDIMPIEGATO=1 [42102-212]
+2024-05-28 09:33:13 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Cannot drop "IMPIEGATO" because "CONSTRAINT_A8" depends on it; SQL statement:
+DROP TABLE IF EXISTS IMPIEGATO [90107-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:632)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.command.ddl.DropTable.prepareDrop(DropTable.java:97)
+	at org.h2.command.ddl.DropTable.update(DropTable.java:121)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:174)
+	at org.h2.command.Command.executeUpdate(Command.java:252)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:252)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+2024-05-28 09:33:13 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "IMPIEGATO" already exists; SQL statement:
+CREATE TABLE Impiegato (
+    id IDENTITY,
+    password VARCHAR(255)
+) [42101-212]
+2024-05-28 09:35:03 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE FROM IMPIEGATO WHERE ID=3[*], ID=4"; SQL statement:
+DELETE FROM IMPIEGATO WHERE ID=3, ID=4 [42000-212]
+2024-05-28 09:40:34 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "ALTER TABLE TRATTA [*]DROPCONSTRAINT IDENTITY"; expected "., ADD, SET, RENAME, DROP, ALTER"; SQL statement:
+ALTER TABLE TRATTA DROPCONSTRAINT IDENTITY [42001-212]
+2024-05-28 09:40:40 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Constraint "IDENTITY" not found; SQL statement:
+ALTER TABLE TRATTA DROP CONSTRAINT IDENTITY [90057-212]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:632)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.command.ddl.AlterTableDropConstraint.update(AlterTableDropConstraint.java:51)
+	at org.h2.command.ddl.AlterTable.update(AlterTable.java:46)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:174)
+	at org.h2.command.Command.executeUpdate(Command.java:252)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:252)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:223)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1339)
+	at org.h2.server.web.WebApp.query(WebApp.java:1137)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1103)
+	at org.h2.server.web.WebApp$1.next(WebApp.java:1090)
+	at org.h2.server.web.WebThread.process(WebThread.java:189)
+	at org.h2.server.web.WebThread.run(WebThread.java:102)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+2024-05-28 09:41:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "ALTER TABLE TRATTA DROP CONSTRAINT [*]FOREIGN KEY"; expected "identifier"; SQL statement:
+ALTER TABLE TRATTA DROP CONSTRAINT FOREIGN KEY [42001-212]
+2024-05-28 09:41:35 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "ALTER TABLE TRATTA ADD CONSTRAINT [*]UNIQUE TO IDCORSA"; expected "identifier"; SQL statement:
+ALTER TABLE TRATTA ADD CONSTRAINT UNIQUE TO IDCORSA [42001-212]
+2024-05-28 09:45:11 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "ALTER TABLE TRATTA \000d\000a[*]modify IDCORSA SMALLINT UNIQUE"; expected "., ADD, SET, RENAME, DROP, ALTER"; SQL statement:
+ALTER TABLE TRATTA 
+modify IDCORSA SMALLINT UNIQUE [42001-212]
+2024-05-28 09:45:16 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "ALTER TABLE TRATTA [*]modify IDCORSA SMALLINT UNIQUE"; expected "., ADD, SET, RENAME, DROP, ALTER"; SQL statement:
+ALTER TABLE TRATTA modify IDCORSA SMALLINT UNIQUE [42001-212]
+2024-05-28 09:45:27 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "ALTER TABLE TRATTA [*]MODIFY IDCORSA SMALLINT UNIQUE"; expected "., ADD, SET, RENAME, DROP, ALTER"; SQL statement:
+ALTER TABLE TRATTA MODIFY IDCORSA SMALLINT UNIQUE [42001-212]

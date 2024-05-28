@@ -14,7 +14,7 @@ import exception.OperationException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 
-public class BoundaryCliente {
+public class BoundaryImpiegato {
     
 
 	static Scanner scan = new Scanner(System.in);
@@ -25,14 +25,14 @@ public class BoundaryCliente {
 		
 		while(!exit) {
 
-			System.out.println("\n************* Cliente: *************");
-			System.out.println("1. Acquista biglietto via web");
+			System.out.println("\n************* Impiegato: *************");
+			System.out.println("1. Vendi biglietto");
 			System.out.println("2. Esci");
 			
 			String op = scan.nextLine();
 
 			if(op.equals("1")) {
-				acquistaBigliettoViaWeb();
+				vendiBiglietto();
 			} else if(op.equals("2")){
 				exit = true;
 				System.out.println("Uscita...");
@@ -46,9 +46,9 @@ public class BoundaryCliente {
 		
 	}
 
-    private static void acquistaBigliettoViaWeb() {
+    private static void vendiBiglietto() {
 
-		String CITTAPARTENZA=null, CITTAARRIVO=null, MAIL=null;
+		String CITTAPARTENZA=null, CITTAARRIVO=null;
 		Time ORARIOPARTENZA = null; Date DATAPARTENZA = null;
 		int NUMEROSEDILI=0, NUMEROBAGAGLI=0;
 		float PREZZOBIGLIETTIMASSIMO=0, DIMENSIONEBAGAGLIO=0;
@@ -94,22 +94,6 @@ public class BoundaryCliente {
 				}
 			}
 
-			/* acquisizione input MAIL */
-			inputValido = false;
-			while (!inputValido) {
-				try {
-					System.out.println("Inserisci l'indirizzo mail:");
-					MAIL = scan.nextLine();
-					if (MAIL.contains("@") && MAIL.contains(".")) {
-						inputValido = true;
-					} else {
-						System.out.println("Email non valida..");
-					}
-				}catch(InputMismatchException e){
-					System.out.println("Errore nell'acquisizione della mail, rirpova...\n");
-				}
-			}
-
 			/* acquisizione input NUMEROSEDILI e NUMEROBAGAGLI */
 			inputValido = false;
 			while (!inputValido) {
@@ -143,11 +127,10 @@ public class BoundaryCliente {
 				}
 			}
     
-			propostaTrovata = gestioneTraspostoIstance.acquistaBigliettoViaWeb(
+			propostaTrovata = gestioneTraspostoIstance.vendiBiglietto(
 				CITTAPARTENZA, 
 				CITTAARRIVO,
 				ORARIOPARTENZA,
-				MAIL,
 				PREZZOBIGLIETTIMASSIMO,
 				NUMEROSEDILI,
 				NUMEROBAGAGLI,
@@ -160,7 +143,6 @@ public class BoundaryCliente {
 			// 	"Napoli", 
 			// 	"Roma",
 			// 	ORARIOPARTENZA,
-			// 	"m@m.m",
 			// 	55,
 			// 	1,
 			// 	0,
@@ -178,46 +160,26 @@ public class BoundaryCliente {
 								);
 
 			System.out.println("\n************* Confermi? *************");
-			System.out.println("Digita 'S' per confermare l'acquisto all'indirizzo " + MAIL + 
+			System.out.println("Digita 'S' per confermare la vendita" + 
 								"\noppure \nDigita qualunque altro carattere per annullare");
 			String confermaProposta = scan.nextLine();
 
 			if (!confermaProposta.equals("S") && !confermaProposta.equals("s")) {
-				System.out.println("Acquisto annullato...\n");
+				System.out.println("Vendita annullata...\n");
 				return;
 			}
-
-			inputValido = false;
-			while (!inputValido) {
-				System.out.println("\nInserisci il numero di carta:");
-
-				String numeroCarta = scan.nextLine(); //"1234567812345678";
-
-				try {
-					Long.parseLong(numeroCarta);
-
-					if (numeroCarta.length() == 16) {
-						inputValido = true;
-					} else {
-						System.out.println("Errore inserimento carta, deve essere di 16 cifre..");
-					}
-				} catch (NumberFormatException e) {
-					System.out.println("Errore inserimento carta, deve contenere solo numeri..");
-				}
-			}
-
 
 			System.out.println("Pagamento in corso...");
 			TimeUnit.SECONDS.sleep(3);
 			System.out.println("Pagamento effettuato!");
 
-			gestioneTraspostoIstance.confermaAcquisto(propostaTrovata, NUMEROSEDILI, NUMEROBAGAGLI, MAIL);
+			gestioneTraspostoIstance.confermaVendita(propostaTrovata, NUMEROSEDILI, NUMEROBAGAGLI);
 			
-			System.out.println("\nInvio biglietti in corso...");
+			System.out.println("\nStampa biglietti in corso...");
 			TimeUnit.SECONDS.sleep(2);
-			System.out.println("Biglietti inviati sulla mail " + MAIL + "!");
+			System.out.println("Biglietti stampati!");
 
-			System.out.println("\n************* Acquisto completato! *************");
+			System.out.println("\n************* Vendita completata! *************");
 			System.out.println("Grazie per aver scelto GioLines!\n\n\n\n");
 
 		} catch (OperationException oE) {
