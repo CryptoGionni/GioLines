@@ -29,6 +29,11 @@ public class testBoundaryCliente {
 	public void tearDown() throws Exception {
 	}
 
+	@Test
+	public void testAcquistaBigliettoViaWeb() {    /*Test Case: 1 */
+        BoundaryCliente._acquistaBigliettoViaWeb();
+    }
+
     
 	@Test
 	public void testInserisciCittàArrivo() {    /*Test Case: 2 */

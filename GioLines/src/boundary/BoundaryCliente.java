@@ -45,7 +45,12 @@ public class BoundaryCliente {
 
 	}
 
-	/* to be tested */
+	/*Test Case: 1 */
+	public static void _acquistaBigliettoViaWeb(){
+		acquistaBigliettoViaWeb();
+	}
+	
+	/*Test Case: 2 */
 	public static String inserisciCittàArrivo() {
 
 		String città = "";
@@ -66,7 +71,7 @@ public class BoundaryCliente {
 		return città.toUpperCase();
 	}
 
-	/* to be tested */
+	/*Test Case: 3 */
 	public static int inserisciNumeroSedili() {
 
 		boolean pass = true;
@@ -86,7 +91,7 @@ public class BoundaryCliente {
 		return sed;
 	}
 
-	/* to be tested */
+	/*Test Case: 4-5 */
 	public static int inserisciNumeroBagagli(int sed) {
 
 		boolean pass = true;
@@ -110,8 +115,7 @@ public class BoundaryCliente {
 		return bag;
 	}
 
-	
-	/* to be tested */
+	/*Test Case: 6 */
 	public static String[] inserisciDimensioneBagaglio() {
 
 		boolean pass = true;
