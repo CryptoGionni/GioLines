@@ -38,7 +38,9 @@ public class AutobusDAO {
                         result.getInt(4),
                         result.getInt(5),
                         result.getInt(6),
-                        result.getFloat(7)
+                        result.getFloat(7),
+                        result.getFloat(8),
+                        result.getFloat(9)
                         );
                     
 				} else{
@@ -97,11 +99,12 @@ public class AutobusDAO {
     }
 
 
-	// /*FUNZIONE DI TEST: comunicazione DB*/
+	// // /*FUNZIONE DI TEST: comunicazione DB*/
 	// public static void main(String[] args) {
 		
 	// 	try {
-    //         System.out.println(updateAutobus(5,4,"1"));
+    //      System.out.println(updateAutobus(5,4,"1"));
+	// 		System.out.println(readAutobus(1));
 	// 	} catch (Exception e) {
 	// 		e.printStackTrace();
 	// 	}	

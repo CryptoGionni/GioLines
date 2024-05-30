@@ -8,17 +8,21 @@ public class EntityAutobus {
     private int idCorsa;
     private int sediliMax;
     private int bagagliMax;
-    private float dimensioneBagaglio;
+    private float dimensioneBagaglioH;
+    private float dimensioneBagaglioL;
+    private float dimensioneBagaglioD;
     
     public EntityAutobus(int id, int sediliOccupati, int bagagliOccupati, int idCorsa, int sediliMax, int bagagliMax,
-            float dimensioneBagaglio) {
+            float dimensioneBagaglioH, float dimensioneBagaglioL, float dimensioneBagaglioD) {
         this.id = id;
         this.sediliOccupati = sediliOccupati;
         this.bagagliOccupati = bagagliOccupati;
         this.idCorsa = idCorsa;
         this.sediliMax = sediliMax;
         this.bagagliMax = bagagliMax;
-        this.dimensioneBagaglio = dimensioneBagaglio;
+        this.dimensioneBagaglioH = dimensioneBagaglioH;
+        this.dimensioneBagaglioL = dimensioneBagaglioL;
+        this.dimensioneBagaglioD = dimensioneBagaglioD;
     }
 
     public int getId() {
@@ -69,14 +73,31 @@ public class EntityAutobus {
         this.bagagliMax = bagagliMax;
     }
 
-    public float getDimensioneBagaglio() {
-        return dimensioneBagaglio;
+    public float getDimensioneBagaglioH() {
+        return dimensioneBagaglioH;
     }
 
-    public void setDimensioneBagaglio(float dimensioneBagaglio) {
-        this.dimensioneBagaglio = dimensioneBagaglio;
+    public void setDimensioneBagaglioH(float dimensioneBagaglioH) {
+        this.dimensioneBagaglioH = dimensioneBagaglioH;
     }
 
+    public float getDimensioneBagaglioL() {
+        return dimensioneBagaglioL;
+    }
+
+    public void setDimensioneBagaglioL(float dimensioneBagaglioL) {
+        this.dimensioneBagaglioL = dimensioneBagaglioL;
+    }
+
+    public float getDimensioneBagaglioD() {
+        return dimensioneBagaglioD;
+    }
+
+    public void setDimensioneBagaglioD(float dimensioneBagaglioD) {
+        this.dimensioneBagaglioD = dimensioneBagaglioD;
+    }
+
+    
     
 
 }

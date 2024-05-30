@@ -8,12 +8,11 @@ import java.time.LocalTime; // import the LocalTime class
 import java.time.temporal.ChronoUnit;
 
 import database.BigliettoDAO; //fornisce la updateBiglietto
-import database.TrattaDAO;  //fornisce la funzione readTratta
-import database.CorsaDAO;   //fornisce la funzione readCorsa
+import database.TrattaDAO; //fornisce la funzione readTratta
+import database.CorsaDAO; //fornisce la funzione readCorsa
 import database.AutobusDAO; //fornisce la funzione readAutobus e updateAutobus
-import entity.EntityCorsa;  //fornisce il tipo EntityCorsa
-import entity.EntityAutobus;  //fornisce il tipo EntityAutobus
-
+import entity.EntityCorsa; //fornisce il tipo EntityCorsa
+import entity.EntityAutobus; //fornisce il tipo EntityAutobus
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,33 +24,30 @@ import exception.OperationException;
 public class GestioneTrasporto {
 
     private static GestioneTrasporto gC = null;
-    public static GestioneTrasporto getInstance() 
-	{ 
-		if (gC == null) 
-			gC = new GestioneTrasporto(); 
 
-		return gC; 
-	}
-    
+    public static GestioneTrasporto getInstance() {
+        if (gC == null)
+            gC = new GestioneTrasporto();
+
+        return gC;
+    }
+
     public ArrayList<String> acquistaBigliettoViaWeb(
-        String CITTAPARTENZA,
-        String CITTAARRIVO,
-        Time ORARIOPARTENZA,
-        String MAIL,
-        float PREZZOBIGLIETTIMASSIMO,
-        int NUMEROSEDILI,
-        int NUMEROBAGAGLI,
-        float DIMENSIONEBAGAGLIO
-        )throws OperationException{
-
+            String CITTAPARTENZA,
+            String CITTAARRIVO,
+            Time ORARIOPARTENZA,
+            String MAIL,
+            float PREZZOBIGLIETTIMASSIMO,
+            int NUMEROSEDILI,
+            int NUMEROBAGAGLI,
+            ArrayList<Float> DIMENSIONEBAGAGLIO) throws OperationException {
 
         ArrayList<String> proposta = new ArrayList<String>();
         proposta.add("0");
         proposta.add("0");
         proposta.add("0");
-        proposta.add("0");        
         proposta.add("0");
-
+        proposta.add("0");
 
         int idCorsa = 0;
         float prezzoTotale = 0;
@@ -60,51 +56,58 @@ public class GestioneTrasporto {
 
         try {
 
-            //assert NUMEROSEDILI >= NUMEROBAGAGLI : "numero bagagli errato";
-            if(NUMEROSEDILI < NUMEROBAGAGLI) {
-				throw new OperationException("Numero bagagli errato");
-			}
             idCorsa = TrattaDAO.readTratta(CITTAPARTENZA, CITTAARRIVO);
 
-            //assert idCorsa != 0 : "tratta non disponibile";            
-            if(idCorsa == 0) {
-				throw new OperationException("Tratta non disponibile");
-			}
+            // assert idCorsa != 0 : "tratta non disponibile";
+            if (idCorsa == 0) {
+                throw new OperationException("Tratta non disponibile");
+            }
             ec = CorsaDAO.readCorsa(idCorsa);
-            
-            //assert ORARIOPARTENZA <= ec.getOrarioPartenza() || PREZZOBIGLIETTIMASSIMO >= ec.getPrezzoBiglietto() : "Corsa non compatibile";            
-            if(ORARIOPARTENZA.after(ec.getOrarioPartenza()) || PREZZOBIGLIETTIMASSIMO < ec.getPrezzoBiglietto()) {
-                throw new OperationException("Corsa non compatibile");
+
+            // assert ORARIOPARTENZA <= ec.getOrarioPartenza() : "orario corsa non
+            // compatibile";
+            if (ORARIOPARTENZA.after(ec.getOrarioPartenza())) {
+                throw new OperationException("Orario corsa non compatibile");
+            }
+            // assert PREZZOBIGLIETTIMASSIMO >= ec.getPrezzoBiglietto() : "prezzo corsa non
+            // compatibile";
+            if (PREZZOBIGLIETTIMASSIMO < ec.getPrezzoBiglietto()) {
+                throw new OperationException("Prezzo corsa non compatibile");
             }
             ea = AutobusDAO.readAutobus(idCorsa);
 
-            //assert NUMEROSEDILI+ea.getSediliOccupati()<=ea.getSediliMax() : "Posti sedili disponibili insufficienti";
-            if(NUMEROSEDILI+ea.getSediliOccupati()>ea.getSediliMax()) {
-                throw new OperationException("Posti sedili disponibili insufficienti");
+            // assert NUMEROSEDILI+ea.getSediliOccupati()<=ea.getSediliMax() : "Posti sedili
+            // disponibili insufficienti";
+            if (NUMEROSEDILI + ea.getSediliOccupati() > ea.getSediliMax()) {
+                throw new OperationException("Posti disponibili insufficienti");
             }
 
-            //assert NUMEROBAGAGLI+ea.getBagagliOccupati()<=ea.getBagagliMax() : "Posti bagagli disponibili insufficienti";
-            if(NUMEROBAGAGLI+ea.getBagagliOccupati()>ea.getBagagliMax()) {
-                throw new OperationException("Posti bagagli disponibili insufficienti");
+            // assert NUMEROBAGAGLI+ea.getBagagliOccupati()<=ea.getBagagliMax() : "Posti
+            // bagagli disponibili insufficienti";
+            if (NUMEROBAGAGLI + ea.getBagagliOccupati() > ea.getBagagliMax()) {
+                throw new OperationException("Spazio bagagli disponibili insufficienti");
             }
 
-            //assert DIMENSIONEBAGAGLIO <= ea.getDimensioneBagaglio() : "Dimensione bagaglio non rispettata";
-            if(DIMENSIONEBAGAGLIO > ea.getDimensioneBagaglio()) {
+            // assert DIMENSIONEBAGAGLIO <= ea.getDimensioneBagaglio() : "Dimensione
+            // bagaglio non rispettata";
+            if (DIMENSIONEBAGAGLIO.get(0) > ea.getDimensioneBagaglioH() ||
+                    DIMENSIONEBAGAGLIO.get(1) > ea.getDimensioneBagaglioL() ||
+                    DIMENSIONEBAGAGLIO.get(2) > ea.getDimensioneBagaglioD()) {
                 throw new OperationException("Dimensione bagaglio non rispettata");
             }
 
             /* calcolo prezzo dell'ordine */
             prezzoTotale = calcolaPrezzoTotale(ec.getPrezzoBiglietto(), NUMEROSEDILI);
-            if(NUMEROBAGAGLI>0){
+            if (NUMEROBAGAGLI > 0) {
                 prezzoTotale += applicaSupplemento(NUMEROBAGAGLI);
             }
 
             /* preparazione ArrayList di stringhe di ritorno al boundary */
-            proposta.set(0, String.valueOf(idCorsa));             
-            proposta.set(1, String.valueOf(ec.getOrarioPartenza())); 
-            proposta.set(2, String.valueOf(ec.getOrarioArrivo()));           
-            proposta.set(3, String.valueOf(prezzoTotale)); 
-            proposta.set(4, String.valueOf(ec.getPrezzoBiglietto())); //extra value
+            proposta.set(0, String.valueOf(idCorsa));
+            proposta.set(1, String.valueOf(ec.getOrarioPartenza()));
+            proposta.set(2, String.valueOf(ec.getOrarioArrivo()));
+            proposta.set(3, String.valueOf(prezzoTotale));
+            proposta.set(4, String.valueOf(ec.getPrezzoBiglietto())); // extra value
 
             /* destroy delle entità di appoggio */
             ec = null;
@@ -112,59 +115,61 @@ public class GestioneTrasporto {
 
             return proposta;
 
-        }catch(DBConnectionException dbEx) {
+        } catch (DBConnectionException dbEx) {
             throw new OperationException("\nRiscontrato problema interno applicazione [ab]!\n");
-        }catch(DAOException ex) {
+        } catch (DAOException ex) {
             throw new OperationException("\nOps, qualcosa e' andato storto...\n");
         }
-        
 
     }
 
-    public void confermaAcquisto(ArrayList<String> propostaConfermata, int numSedili, int numBagagli, String mail)throws OperationException{
+    public void confermaAcquisto(ArrayList<String> propostaConfermata, int numSedili, int numBagagli, String mail)
+            throws OperationException {
 
-        try{
+        try {
 
-            setNumeroSediliDisponibili(numSedili, numBagagli, propostaConfermata.get(0));            
-            
-            for(int i = 1; i<=numBagagli; i++){
-                registrazioneInternaBiglietto(String.valueOf(LocalDate.now()),String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)),42,true);
+            setNumeroSediliDisponibili(numSedili, numBagagli, propostaConfermata.get(0));
+
+            for (int i = 1; i <= numBagagli; i++) {
+                registrazioneInternaBiglietto(String.valueOf(LocalDate.now()),
+                        String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)), 42, true);
             }
 
-            for(int i = 1; i<=(numSedili-numBagagli); i++){
-                registrazioneInternaBiglietto(String.valueOf(LocalDate.now()),String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)),42,false);
+            for (int i = 1; i <= (numSedili - numBagagli); i++) {
+                registrazioneInternaBiglietto(String.valueOf(LocalDate.now()),
+                        String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)), 42, false);
             }
 
-            invioMail(propostaConfermata.get(0), propostaConfermata.get(1), propostaConfermata.get(2), propostaConfermata.get(3), numSedili, numBagagli, mail);
+            invioMail(propostaConfermata.get(0), propostaConfermata.get(1), propostaConfermata.get(2),
+                    propostaConfermata.get(3), numSedili, numBagagli, mail);
 
-        }catch(DBConnectionException dbEx) {
+        } catch (DBConnectionException dbEx) {
             throw new OperationException("\nErrore connessione DB!\n");
-        }catch(DAOException ex) {
+        } catch (DAOException ex) {
             throw new OperationException("\nOperazione DAO fallita\n");
-        }catch(OperationException e) {
+        } catch (OperationException e) {
             throw new OperationException("\nRiscontrato problema interno applicazione [ca]!\n");
-        }catch(ParseException pEx){
+        } catch (ParseException pEx) {
             throw new OperationException("\nErrore Time...\n");
         }
-        
+
     }
 
     public ArrayList<String> vendiBiglietto(
-        String CITTAPARTENZA,
-        String CITTAARRIVO,
-        Time ORARIOPARTENZA,
-        float PREZZOBIGLIETTIMASSIMO,
-        int NUMEROSEDILI,
-        int NUMEROBAGAGLI,
-        float DIMENSIONEBAGAGLIO
-        )throws OperationException{
-        
+            String CITTAPARTENZA,
+            String CITTAARRIVO,
+            Time ORARIOPARTENZA,
+            float PREZZOBIGLIETTIMASSIMO,
+            int NUMEROSEDILI,
+            int NUMEROBAGAGLI,
+            ArrayList<Float> DIMENSIONEBAGAGLIO) throws OperationException {
+
         ArrayList<String> proposta = new ArrayList<String>();
         proposta.add("0");
         proposta.add("0");
         proposta.add("0");
         proposta.add("0");
-
+        proposta.add("0");
 
         int idCorsa = 0;
         float prezzoTotale = 0;
@@ -173,50 +178,58 @@ public class GestioneTrasporto {
 
         try {
 
-            //assert NUMEROSEDILI >= NUMEROBAGAGLI : "numero bagagli errato";
-            if(NUMEROSEDILI < NUMEROBAGAGLI) {
-				throw new OperationException("Numero bagagli errato");
-			}
             idCorsa = TrattaDAO.readTratta(CITTAPARTENZA, CITTAARRIVO);
 
-            //assert idCorsa != 0 : "tratta non disponibile";            
-            if(idCorsa == 0) {
-				throw new OperationException("Tratta non disponibile");
-			}
+            // assert idCorsa != 0 : "tratta non disponibile";
+            if (idCorsa == 0) {
+                throw new OperationException("Tratta non disponibile");
+            }
             ec = CorsaDAO.readCorsa(idCorsa);
-            
-            //assert ORARIOPARTENZA <= ec.getOrarioPartenza() || PREZZOBIGLIETTIMASSIMO >= ec.getPrezzoBiglietto() : "Corsa non compatibile";            
-            if(ORARIOPARTENZA.after(ec.getOrarioPartenza()) || PREZZOBIGLIETTIMASSIMO < ec.getPrezzoBiglietto()) {
-                throw new OperationException("Corsa non compatibile");
+
+            // assert ORARIOPARTENZA <= ec.getOrarioPartenza() : "orario corsa non
+            // compatibile";
+            if (ORARIOPARTENZA.after(ec.getOrarioPartenza())) {
+                throw new OperationException("Orario corsa non compatibile");
+            }
+            // assert PREZZOBIGLIETTIMASSIMO >= ec.getPrezzoBiglietto() : "prezzo corsa non
+            // compatibile";
+            if (PREZZOBIGLIETTIMASSIMO < ec.getPrezzoBiglietto()) {
+                throw new OperationException("Prezzo corsa non compatibile");
             }
             ea = AutobusDAO.readAutobus(idCorsa);
 
-            //assert NUMEROSEDILI+ea.getSediliOccupati()<=ea.getSediliMax() : "Posti sedili disponibili insufficienti";
-            if(NUMEROSEDILI+ea.getSediliOccupati()>ea.getSediliMax()) {
-                throw new OperationException("Posti sedili disponibili insufficienti");
+            // assert NUMEROSEDILI+ea.getSediliOccupati()<=ea.getSediliMax() : "Posti sedili
+            // disponibili insufficienti";
+            if (NUMEROSEDILI + ea.getSediliOccupati() > ea.getSediliMax()) {
+                throw new OperationException("Posti disponibili insufficienti");
             }
 
-            //assert NUMEROBAGAGLI+ea.getBagagliOccupati()<=ea.getBagagliMax() : "Posti bagagli disponibili insufficienti";
-            if(NUMEROBAGAGLI+ea.getBagagliOccupati()>ea.getBagagliMax()) {
-                throw new OperationException("Posti bagagli disponibili insufficienti");
+            // assert NUMEROBAGAGLI+ea.getBagagliOccupati()<=ea.getBagagliMax() : "Posti
+            // bagagli disponibili insufficienti";
+            if (NUMEROBAGAGLI + ea.getBagagliOccupati() > ea.getBagagliMax()) {
+                throw new OperationException("Spazio bagagli disponibili insufficienti");
             }
 
-            //assert DIMENSIONEBAGAGLIO <= ea.getDimensioneBagaglio() : "Dimensione bagaglio non rispettata";
-            if(DIMENSIONEBAGAGLIO > ea.getDimensioneBagaglio()) {
+            // assert DIMENSIONEBAGAGLIO <= ea.getDimensioneBagaglio() : "Dimensione
+            // bagaglio non rispettata";
+            if (DIMENSIONEBAGAGLIO.get(0) > ea.getDimensioneBagaglioH() ||
+                    DIMENSIONEBAGAGLIO.get(1) > ea.getDimensioneBagaglioL() ||
+                    DIMENSIONEBAGAGLIO.get(2) > ea.getDimensioneBagaglioD()) {
                 throw new OperationException("Dimensione bagaglio non rispettata");
             }
 
             /* calcolo prezzo dell'ordine */
             prezzoTotale = calcolaPrezzoTotale(ec.getPrezzoBiglietto(), NUMEROSEDILI);
-            if(NUMEROBAGAGLI>0){
+            if (NUMEROBAGAGLI > 0) {
                 prezzoTotale += applicaSupplemento(NUMEROBAGAGLI);
             }
 
             /* preparazione ArrayList di stringhe di ritorno al boundary */
-            proposta.set(0, String.valueOf(idCorsa));             
-            proposta.set(1, String.valueOf(ec.getOrarioPartenza())); 
-            proposta.set(2, String.valueOf(ec.getOrarioArrivo()));           
-            proposta.set(3, String.valueOf(prezzoTotale)); 
+            proposta.set(0, String.valueOf(idCorsa));
+            proposta.set(1, String.valueOf(ec.getOrarioPartenza()));
+            proposta.set(2, String.valueOf(ec.getOrarioArrivo()));
+            proposta.set(3, String.valueOf(prezzoTotale));
+            proposta.set(4, String.valueOf(ec.getPrezzoBiglietto())); // extra value
 
             /* destroy delle entità di appoggio */
             ec = null;
@@ -224,93 +237,100 @@ public class GestioneTrasporto {
 
             return proposta;
 
-        }catch(DBConnectionException dbEx) {
+        } catch (DBConnectionException dbEx) {
             throw new OperationException("\nRiscontrato problema interno applicazione [ab]!\n");
-        }catch(DAOException ex) {
+        } catch (DAOException ex) {
             throw new OperationException("\nOps, qualcosa e' andato storto...\n");
         }
     }
-        
-    public void confermaVendita(ArrayList<String> propostaConfermata, int numSedili, int numBagagli)throws OperationException{
 
+    public void confermaVendita(ArrayList<String> propostaConfermata, int numSedili, int numBagagli)
+            throws OperationException {
 
-        try{
+        try {
 
-            setNumeroSediliDisponibili(numSedili, numBagagli, propostaConfermata.get(0));            
-            
-            for(int i = 1; i<=numBagagli; i++){
-                registrazioneInternaBiglietto(String.valueOf(LocalDate.now()),String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)),42,true);
-                stampa(String.valueOf(LocalDate.now()),String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)), true);
+            setNumeroSediliDisponibili(numSedili, numBagagli, propostaConfermata.get(0));
+
+            for (int i = 1; i <= numBagagli; i++) {
+                registrazioneInternaBiglietto(String.valueOf(LocalDate.now()),
+                        String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)), 42, true);
+                stampa(String.valueOf(LocalDate.now()), String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)),
+                        true);
             }
 
-            for(int i = 1; i<=(numSedili-numBagagli); i++){
-                registrazioneInternaBiglietto(String.valueOf(LocalDate.now()),String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)),42,false);
-                stampa(String.valueOf(LocalDate.now()),String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)), false);
+            for (int i = 1; i <= (numSedili - numBagagli); i++) {
+                registrazioneInternaBiglietto(String.valueOf(LocalDate.now()),
+                        String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)), 42, false);
+                stampa(String.valueOf(LocalDate.now()), String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)),
+                        false);
             }
 
-        }catch(DBConnectionException dbEx) {
+        } catch (DBConnectionException dbEx) {
             throw new OperationException("\nErrore connessione DB!\n");
-        }catch(DAOException ex) {
+        } catch (DAOException ex) {
             throw new OperationException("\nOperazione DAO fallita\n");
-        }catch(OperationException e) {
+        } catch (OperationException e) {
             throw new OperationException("\nRiscontrato problema interno applicazione [ca]!\n");
-        }catch(ParseException pEx){
+        } catch (ParseException pEx) {
             throw new OperationException("\nErrore Time...\n");
         }
-        
+
     }
 
-    private int stampa(String oraEmissione, String dataEmissione, boolean presenzaBagaglio){
+    private int stampa(String oraEmissione, String dataEmissione, boolean presenzaBagaglio) {
         return 1;
     }
 
-    private int applicaSupplemento(int N){
+    private int applicaSupplemento(int N) {
         int res = 0;
-        for(int i = 1; i<=N; i++){
+        for (int i = 1; i <= N; i++) {
             res = res + 5;
         }
         return res;
     }
 
-    private float calcolaPrezzoTotale(float prezzoSingolo, int numeroBiglietti){
-        return (prezzoSingolo*numeroBiglietti);
+    private float calcolaPrezzoTotale(float prezzoSingolo, int numeroBiglietti) {
+        return (prezzoSingolo * numeroBiglietti);
     }
 
-    private void registrazioneInternaBiglietto(String data, String ora, int impiegato, boolean bagaglio)throws DBConnectionException, DAOException, OperationException, ParseException{
-        try{
+    private void registrazioneInternaBiglietto(String data, String ora, int impiegato, boolean bagaglio)
+            throws DBConnectionException, DAOException, OperationException, ParseException {
+        try {
             Time t = new Time(new SimpleDateFormat("HH:mm").parse(ora).getTime());
             Date d = Date.valueOf(data);
 
-            BigliettoDAO.updateBiglietto(d,t,impiegato,bagaglio);
+            BigliettoDAO.updateBiglietto(d, t, impiegato, bagaglio);
 
-        }catch(DBConnectionException dbEx) {
+        } catch (DBConnectionException dbEx) {
             throw new DBConnectionException("\nRiscontrato problema interno applicazione [ri]!\n");
-        }catch(DAOException ex) {
+        } catch (DAOException ex) {
             throw new DAOException("\nOps, qualcosa e' andato storto...\n");
-        }catch(ParseException pEx){
+        } catch (ParseException pEx) {
             throw new OperationException("\nErrore Time...\n");
         }
     }
 
-    private int invioMail(String id, String oraP, String oraA, String prezzo, int nS, int nB, String m){
+    private int invioMail(String id, String oraP, String oraA, String prezzo, int nS, int nB, String m) {
 
         return 1;
 
     }
 
-    private int setNumeroSediliDisponibili(int numSedili_, int numBagagli_, String idCorsaStringa_)throws OperationException{
+    private int setNumeroSediliDisponibili(int numSedili_, int numBagagli_, String idCorsaStringa_)
+            throws OperationException {
 
         EntityAutobus ea = null;
 
-        try{
+        try {
 
             ea = AutobusDAO.readAutobus(Integer.parseInt(idCorsaStringa_));
 
-            return AutobusDAO.updateAutobus(ea.getSediliOccupati() + numSedili_ , ea.getBagagliOccupati() + numBagagli_, idCorsaStringa_);
+            return AutobusDAO.updateAutobus(ea.getSediliOccupati() + numSedili_, ea.getBagagliOccupati() + numBagagli_,
+                    idCorsaStringa_);
 
-        }catch(DBConnectionException dbEx) {
+        } catch (DBConnectionException dbEx) {
             throw new OperationException("\nRiscontrato problema interno applicazione [ssd]!\n");
-        }catch(DAOException ex) {
+        } catch (DAOException ex) {
             throw new OperationException("\nOps, qualcosa e' andato storto...\n");
         }
     }

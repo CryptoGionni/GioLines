@@ -14,17 +14,17 @@ private static Connection conn = null;
 	
 	public static Connection getConnection() throws SQLException {
 			
-			//jdbc:h2:file:C:\Users\gio\Desktop\IDS\progetto-GioLines\JAVA-GioLines\GioLines\lib\H2\database;AUTO_SERVER=TRUE
-
-			String root = "C:/Users/gio/Desktop/IDS/progetto-GioLines/JAVA-GioLines/GioLines/lib/H2/"; //~/
-			String dbName = "database"; 
-            String username = "admin";
+			//jdbc:h2:file:C:\Users\gio\Desktop\IDS\progetto-GioLines\JAVA-GioLines\GioLines\database;AUTO_SERVER=TRUE
+			
+			String root = "./"; 
+			String dbName = "database";
+			String username = "admin";
             String password = "";
 
 			if(conn == null || conn.isClosed()) {
 
                 conn = DriverManager.getConnection(
-                    "jdbc:h2:file:" + root + dbName + ";AUTO_SERVER=TRUE",
+                    "jdbc:h2:" + root + dbName + ";AUTO_SERVER=TRUE",
                     username, 
                     password
                 );
@@ -49,15 +49,13 @@ private static Connection conn = null;
         try{
             
 			Statement stmnt = conn.createStatement();
-			ResultSet r = stmnt.executeQuery("SELECT * FROM IMPIEGATO");
+			ResultSet r = stmnt.executeQuery("SELECT * FROM TRATTA");
 			
 			
 			while (r.next()){
-				int id = r.getInt("ID");
+				int id = r.getInt("IDCORSA");
 				if (r.wasNull()) System.out.println("id is null"); 
-				String p = r.getString("PASSWORD");
-				if (r.wasNull()) System.out.println("name is null"); 
-				System.out.println(id + ": " + p);
+				System.out.println(id );
 			}
 			
 			r.close();
