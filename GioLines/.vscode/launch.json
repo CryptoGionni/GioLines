@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+        },
+        {
+            "type": "java",
+            "name": "BoundaryCliente",
+            "request": "launch",
+            "mainClass": "boundary.BoundaryCliente",
+            "projectName": "GioLines_c4487aa3"
+        },
+        {
+            "type": "java",
+            "name": "BoundaryImpiegato",
+            "request": "launch",
+            "mainClass": "boundary.BoundaryImpiegato",
+            "projectName": "GioLines_c4487aa3"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-BoundaryImpiegato",
+            "request": "launch",
+            "mainClass": "test.testBoundaryCliente",
+            "projectName": "GioLines_c4487aa3",
+            "console": "integratedTerminal",
+        }
+    ]
+}

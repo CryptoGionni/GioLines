@@ -90,10 +90,21 @@ public class GestioneTrasporto {
 
             // assert DIMENSIONEBAGAGLIO <= ea.getDimensioneBagaglio() : "Dimensione
             // bagaglio non rispettata";
-            if (DIMENSIONEBAGAGLIO.get(0) > ea.getDimensioneBagaglioH() ||
-                    DIMENSIONEBAGAGLIO.get(1) > ea.getDimensioneBagaglioL() ||
-                    DIMENSIONEBAGAGLIO.get(2) > ea.getDimensioneBagaglioD()) {
-                throw new OperationException("Dimensione bagaglio non rispettata");
+            // if (DIMENSIONEBAGAGLIO.get(0) > ea.getDimensioneBagaglioH() ||
+            //         DIMENSIONEBAGAGLIO.get(1) > ea.getDimensioneBagaglioL() ||
+            //         DIMENSIONEBAGAGLIO.get(2) > ea.getDimensioneBagaglioD()) {
+            //     throw new OperationException("Dimensione bagaglio non rispettata");
+            // }
+            if(checkDimensioniBagaglio(
+                    DIMENSIONEBAGAGLIO.get(0),
+                    DIMENSIONEBAGAGLIO.get(1),
+                    DIMENSIONEBAGAGLIO.get(2), 
+                    ea.getDimensioneBagaglioH(),
+                    ea.getDimensioneBagaglioL(),
+                    ea.getDimensioneBagaglioD()
+                    )
+                ){
+                throw new OperationException("");
             }
 
             /* calcolo prezzo dell'ordine */
@@ -122,6 +133,20 @@ public class GestioneTrasporto {
         }
 
     }
+
+    public boolean checkDimensioniBagaglio(float h, float l, float d, float h_, float l_, float d_){
+            // assert DIMENSIONEBAGAGLIO <= ea.getDimensioneBagaglio() : "Dimensione
+            // bagaglio non rispettata";
+            if (h > h_ || l > l_ || d > d_) 
+            {
+                System.out.println("Dimensione bagaglio non rispettata\n");
+                return true;
+            }
+            return false;
+
+    }
+
+
 
     public void confermaAcquisto(ArrayList<String> propostaConfermata, int numSedili, int numBagagli, String mail)
             throws OperationException {

@@ -45,6 +45,100 @@ public class BoundaryCliente {
 
 	}
 
+	/* to be tested */
+	public static String inserisciCittàArrivo() {
+
+		String città = "";
+		boolean pass = true;
+
+		while (pass) {
+
+			System.out.println("Inserisci una città di arrivo:");
+			città = scan.nextLine();
+
+			if (città.matches(".*\\d.*")) {
+				System.out.println("Città non valida!");
+			} else {
+				pass = false;
+			}
+
+		}
+		return città.toUpperCase();
+	}
+
+	/* to be tested */
+	public static int inserisciNumeroSedili() {
+
+		boolean pass = true;
+		int sed = 0;
+
+		while (pass) {
+
+			System.out.println("Inserisci il numero di posti da acquistare:");
+			sed = Integer.parseInt(scan.nextLine());
+
+			if (sed <= 0) {
+				System.out.println("Numero di posti non valido!");
+			} else {
+				pass = false;
+			}
+		}
+		return sed;
+	}
+
+	/* to be tested */
+	public static int inserisciNumeroBagagli(int sed) {
+
+		boolean pass = true;
+		int bag = 0;
+
+		while (pass) {
+
+			System.out.println(
+				"Inserisci il numero di bagagli da portare \n(max 1 per persona, con supplemento di 5 euro/cad):");
+			bag = Integer.parseInt(scan.nextLine());
+
+			if (bag < 0){
+				System.out.println("Numero di bagagli non valido, riprova...\n");
+			}
+			else if (bag <= sed && bag >= 0) {
+				pass = false;
+			} else {
+				System.out.println("Numero di bagagli maggiore del numero di posti, riprova...\n");
+			}
+		}
+		return bag;
+	}
+
+	
+	/* to be tested */
+	public static String[] inserisciDimensioneBagaglio() {
+
+		boolean pass = true;
+		String regex = "[x]";
+		String tripla = "";
+
+		while (pass) {
+
+
+			System.out.println("Inserisci la dimensione del bagaglio (HxLxD):");
+			tripla = scan.nextLine();		
+
+			if (tripla.contains("x")){			
+				if(tripla.substring(tripla.lastIndexOf("x")).contains("x")){
+					pass = false;
+				}else{
+					System.out.println("Inserire le dimensioni nel formato giusto, riprova...\n");
+				}
+			} else {
+				System.out.println("Inserire le dimensioni nel formato giusto, riprova...\n");
+			}
+		}
+
+		String[] triplaArr = tripla.split(regex);
+		return triplaArr;
+	}
+
 	private static void acquistaBigliettoViaWeb() {
 
 		String CITTAPARTENZA = null, CITTAARRIVO = null, MAIL = null;
@@ -71,8 +165,10 @@ public class BoundaryCliente {
 					System.out.println("Inserisci una città di partenza:");
 					CITTAPARTENZA = scan.nextLine().toUpperCase();
 
-					System.out.println("Inserisci una città di arrivo:");
-					CITTAARRIVO = scan.nextLine().toUpperCase();
+					// System.out.println("Inserisci una città di arrivo:");
+					// CITTAARRIVO = scan.nextLine().toUpperCase();
+
+					CITTAARRIVO = inserisciCittàArrivo();
 
 					inputValido = true;
 				} catch (InputMismatchException e) {
@@ -118,8 +214,11 @@ public class BoundaryCliente {
 			inputValido = false;
 			while (!inputValido) {
 				try {
-					System.out.println("Inserisci il numero di posti da acquistare:");
-					NUMEROSEDILI = Integer.parseInt(scan.nextLine());
+
+					// System.out.println("Inserisci il numero di posti da acquistare:");
+					// NUMEROSEDILI = Integer.parseInt(scan.nextLine());
+
+					NUMEROSEDILI = inserisciNumeroSedili();
 
 					inputValido = true;
 				} catch (NumberFormatException nE) {
@@ -131,17 +230,45 @@ public class BoundaryCliente {
 			inputValido = false;
 			while (!inputValido) {
 				try {
-					System.out.println(
-							"Inserisci il numero di bagagli da portare \n(max 1 per persona, con supplemento di 5 euro/cad):");
-					NUMEROBAGAGLI = Integer.parseInt(scan.nextLine());
+					// System.out.println(
+					// 		"Inserisci il numero di bagagli da portare \n(max 1 per persona, con supplemento di 5 euro/cad):");
+					// NUMEROBAGAGLI = Integer.parseInt(scan.nextLine());
 
-					if (NUMEROBAGAGLI < NUMEROSEDILI) {
-						inputValido = true;
-					} else {
-						System.out.println("Numero di bagagli maggiore del numero di posti, riprova...\n");
-					}
+					// if (NUMEROBAGAGLI < NUMEROSEDILI) {
+					// 	inputValido = true;
+					// } else {
+					// 	System.out.println("Numero di bagagli maggiore del numero di posti, riprova...\n");
+					// }
+					NUMEROBAGAGLI = inserisciNumeroBagagli(NUMEROSEDILI);
+					
+					inputValido = true;
+
 				} catch (NumberFormatException nE) {
 					System.out.println("Errore, inserire un numero valido...\n");
+				}
+			}
+
+			/* acquisizione input DIMENSIONEBAGAGLIO */
+			inputValido = false;
+			while (!inputValido) {
+				try {
+					// System.out.println("Inserisci la dimensione del bagaglio (HxLxD):");
+					// String tripla = scan.nextLine();
+					// String regex = "[x]";
+					// String[] triplaArr = tripla.split(regex);
+					// for (int i = 0; i < 3; i++) {
+					// 	DIMENSIONEBAGAGLIO.set(i, Float.parseFloat(triplaArr[i]));
+					// }
+					if(NUMEROBAGAGLI>0){
+						String[] triplaArr = inserisciDimensioneBagaglio();
+						for (int i = 0; i < 3; i++) {
+							DIMENSIONEBAGAGLIO.set(i, Float.parseFloat(triplaArr[i]));
+						}
+					}
+					
+					inputValido = true;
+				} catch (NumberFormatException nE) {
+					System.out.println("Errore, inserire le dimensioni nel formato giusto...\n");
 				}
 			}
 
@@ -158,23 +285,7 @@ public class BoundaryCliente {
 				}
 			}
 
-			/* acquisizione input DIMENSIONEBAGAGLIO */
-			inputValido = false;
-			while (!inputValido) {
-				try {
-					System.out.println("Inserisci la dimensione del bagaglio (HxLxD):");
-					String tripla = scan.nextLine();
-					String regex = "[x]";
-					String[] triplaArr = tripla.split(regex);
-					for (int i = 0; i < 3; i++) {
-						DIMENSIONEBAGAGLIO.set(i, Float.parseFloat(triplaArr[i]));
-					}
 
-					inputValido = true;
-				} catch (NumberFormatException nE) {
-					System.out.println("Errore, inserire le dimensioni nel formato giusto...\n");
-				}
-			}
 
 			propostaTrovata = gestioneTraspostoIstance.acquistaBigliettoViaWeb(
 					CITTAPARTENZA,
@@ -185,6 +296,7 @@ public class BoundaryCliente {
 					NUMEROSEDILI,
 					NUMEROBAGAGLI,
 					DIMENSIONEBAGAGLIO);
+					
 
 			/* stampa della proposta trovata */
 			System.out.println("\n************* Ecco l'autobus perfetto per te! *************" +
