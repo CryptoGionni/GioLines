@@ -15,10 +15,12 @@ public class testBoundaryCliente {
     
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		System.out.println("Test Start!\n");
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		System.out.println("Test Finished!\n");
 	}
 
 	@Before
@@ -30,7 +32,12 @@ public class testBoundaryCliente {
 	}
 
 	@Test
-	public void testAcquistaBigliettoViaWeb() {    /*Test Case: 1 */
+	public void testAcquistaBigliettoViaWeb() {    /*Test Case: 0 */
+        BoundaryCliente._acquistaBigliettoViaWeb();
+    }
+
+	@Test
+	public void testAcquistaBigliettoViaWeb_senzaBagaglio() {    /*Test Case: 1 */
         BoundaryCliente._acquistaBigliettoViaWeb();
     }
 

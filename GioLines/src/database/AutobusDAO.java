@@ -99,12 +99,12 @@ public class AutobusDAO {
     }
 
 
-	// // /*FUNZIONE DI TEST: comunicazione DB*/
+	// // // /*FUNZIONE DI TEST: comunicazione DB*/
 	// public static void main(String[] args) {
 		
 	// 	try {
-    //      System.out.println(updateAutobus(5,4,"1"));
-	// 		System.out.println(readAutobus(1));
+    //      	System.out.println(updateAutobus(5,4,"1"));
+	// 		// System.out.println(readAutobus(1));
 	// 	} catch (Exception e) {
 	// 		e.printStackTrace();
 	// 	}	

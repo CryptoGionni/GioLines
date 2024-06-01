@@ -6,23 +6,13 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Current File",
+            "name": "Launch JUnit Tests",
             "request": "launch",
-            "mainClass": "${file}",
-        },
-        {
-            "type": "java",
-            "name": "BoundaryCliente",
-            "request": "launch",
-            "mainClass": "boundary.BoundaryCliente",
-            "projectName": "GioLines_c4487aa3"
-        },
-        {
-            "type": "java",
-            "name": "BoundaryImpiegato",
-            "request": "launch",
-            "mainClass": "boundary.BoundaryImpiegato",
-            "projectName": "GioLines_c4487aa3"
+            "mainClass": "org.junit.platform.console.ConsoleLauncher",
+            "args": [
+                "--scan-classpath"
+            ],
+            "console": "integratedTerminal"  // Puoi cambiare a "externalTerminal" per terminale esterno
         },
         {
             "type": "java",
@@ -30,7 +20,30 @@
             "request": "launch",
             "mainClass": "test.testBoundaryCliente",
             "projectName": "GioLines_c4487aa3",
-            "console": "integratedTerminal",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "BoundaryCliente",
+            "request": "launch",
+            "mainClass": "boundary.BoundaryCliente",
+            "projectName": "GioLines_c4487aa3",
+            "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "BoundaryImpiegato",
+            "request": "launch",
+            "mainClass": "boundary.BoundaryImpiegato",
+            "projectName": "GioLines_c4487aa3",
+            "console": "integratedTerminal"
         }
     ]
 }

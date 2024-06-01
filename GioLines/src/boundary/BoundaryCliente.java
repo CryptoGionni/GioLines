@@ -100,7 +100,7 @@ public class BoundaryCliente {
 		while (pass) {
 
 			System.out.println(
-				"Inserisci il numero di bagagli da portare \n(max 1 per persona, con supplemento di 5 euro/cad):");
+				"Inserisci il numero di bagagli da portare: \n(max 1 per persona, con supplemento di 5 euro/cad)");
 			bag = Integer.parseInt(scan.nextLine());
 
 			if (bag < 0){
@@ -143,6 +143,7 @@ public class BoundaryCliente {
 		return triplaArr;
 	}
 
+	
 	private static void acquistaBigliettoViaWeb() {
 
 		String CITTAPARTENZA = null, CITTAARRIVO = null, MAIL = null;
@@ -308,7 +309,7 @@ public class BoundaryCliente {
 					"\nPer il giorno: " + DATAPARTENZA +
 					"\nOrario di partenza: " + propostaTrovata.get(1).substring(0, 5) +
 					"\nOrario di arrivo: " + propostaTrovata.get(2).substring(0, 5) +
-					"\nPosti: " + NUMEROSEDILI + " (" + propostaTrovata.get(4) + "euro/cad)" +
+					"\nPosti: " + NUMEROSEDILI + " (" + propostaTrovata.get(4) + " euro/cad)" +
 					"\nBagagli: " + NUMEROBAGAGLI + " (5 euro/cad)" +
 					"\nAl prezzo di: " + propostaTrovata.get(3) + " euro ");
 
