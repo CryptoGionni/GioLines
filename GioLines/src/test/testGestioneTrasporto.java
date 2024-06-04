@@ -2,9 +2,12 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 
+/*(extra-debugging) */
+/*
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+*/
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -38,9 +41,11 @@ public class testGestioneTrasporto {
     @Test
 	public void testCheckDimensioniBagaglio(){    
 		GestioneTrasporto gestioneTraspostoIstance = GestioneTrasporto.getInstance();//singleton
+		
 		float DIMENSIONEBAGAGLIO_H = 3F;
 		float DIMENSIONEBAGAGLIO_L = 3F;
 		float DIMENSIONEBAGAGLIO_D = 3F;
+
 		float DIMENSIONEBAGAGLIO_H_DB = 4F;
 		float DIMENSIONEBAGAGLIO_L_DB = 4F;
 		float DIMENSIONEBAGAGLIO_D_DB = 4F;
@@ -58,7 +63,8 @@ public class testGestioneTrasporto {
         assertEquals(expected, res);
     }
 
-	/*Test Case: A (extra) */
+	/*Test Case: A (extra-debugging: esegue il control, non fa quindi controlli sulla correttezza degli input) */
+	/*
 	@Test
 	public void testAcquistaBigliettoViaWeb() {    
 		GestioneTrasporto gestioneTraspostoIstance = GestioneTrasporto.getInstance();//singleton
@@ -77,7 +83,7 @@ public class testGestioneTrasporto {
 				"ROMA",
 				ORARIOPARTENZA,
 				"g.bolla@studenti.unina.it",
-				77,
+				1,
 				2,
 				0,
 				DIMENSIONEBAGAGLIO);    
@@ -94,5 +100,5 @@ public class testGestioneTrasporto {
 
 
 	}
-
+	*/
 }

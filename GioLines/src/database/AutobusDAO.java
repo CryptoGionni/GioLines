@@ -37,10 +37,9 @@ public class AutobusDAO {
                         result.getInt(3),
                         result.getInt(4),
                         result.getInt(5),
-                        result.getInt(6),
+                        result.getFloat(6),
                         result.getFloat(7),
-                        result.getFloat(8),
-                        result.getFloat(9)
+                        result.getFloat(8)
                         );
                     
 				} else{

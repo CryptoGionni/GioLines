@@ -2,24 +2,14 @@ package entity;
 
 public class EntityTratta {
 
-    private int numeroTratta;
     private int idCorsa;
     private String cittàPartenza;
     private String cittàArrivo;
     
-    public EntityTratta(int numeroTratta, int idCorsa, String cittàPartenza, String cittàArrivo) {
-        this.numeroTratta = numeroTratta;
+    public EntityTratta( int idCorsa, String cittàPartenza, String cittàArrivo) {
         this.idCorsa = idCorsa;
         this.cittàPartenza = cittàPartenza;
         this.cittàArrivo = cittàArrivo;
-    }
-
-    public int getNumeroTratta() {
-        return numeroTratta;
-    }
-
-    public void setNumeroTratta(int numeroTratta) {
-        this.numeroTratta = numeroTratta;
     }
 
     public int getIdCorsa() {

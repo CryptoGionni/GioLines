@@ -2,7 +2,6 @@ package entity;
 
 public class EntityAutobus {
     
-    private int id;
     private int sediliOccupati;
     private int bagagliOccupati;
     private int idCorsa;
@@ -12,9 +11,8 @@ public class EntityAutobus {
     private float dimensioneBagaglioL;
     private float dimensioneBagaglioD;
     
-    public EntityAutobus(int id, int sediliOccupati, int bagagliOccupati, int idCorsa, int sediliMax, int bagagliMax,
-            float dimensioneBagaglioH, float dimensioneBagaglioL, float dimensioneBagaglioD) {
-        this.id = id;
+    public EntityAutobus(int idCorsa, int sediliOccupati, int bagagliOccupati, int sediliMax, int bagagliMax,
+        float dimensioneBagaglioH, float dimensioneBagaglioL, float dimensioneBagaglioD) {
         this.sediliOccupati = sediliOccupati;
         this.bagagliOccupati = bagagliOccupati;
         this.idCorsa = idCorsa;
@@ -23,14 +21,6 @@ public class EntityAutobus {
         this.dimensioneBagaglioH = dimensioneBagaglioH;
         this.dimensioneBagaglioL = dimensioneBagaglioL;
         this.dimensioneBagaglioD = dimensioneBagaglioD;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getSediliOccupati() {

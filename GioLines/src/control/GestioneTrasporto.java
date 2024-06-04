@@ -278,14 +278,14 @@ public class GestioneTrasporto {
 
             for (int i = 1; i <= numBagagli; i++) {
                 registrazioneInternaBiglietto(String.valueOf(LocalDate.now()),
-                        String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)), 42, true);
+                        String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)), 1, true);
                 stampa(String.valueOf(LocalDate.now()), String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)),
                         true);
             }
 
             for (int i = 1; i <= (numSedili - numBagagli); i++) {
                 registrazioneInternaBiglietto(String.valueOf(LocalDate.now()),
-                        String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)), 42, false);
+                        String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)), 1, false);
                 stampa(String.valueOf(LocalDate.now()), String.valueOf(LocalTime.now().truncatedTo(ChronoUnit.MINUTES)),
                         false);
             }
@@ -345,13 +345,13 @@ public class GestioneTrasporto {
         
         throws OperationException {
 
-        EntityAutobus ea = null;
+        EntityAutobus ea_ = null;
 
         try {
 
-            ea = AutobusDAO.readAutobus(Integer.parseInt(idCorsaStringa_));
+            ea_ = AutobusDAO.readAutobus(Integer.parseInt(idCorsaStringa_));
 
-            return AutobusDAO.updateAutobus(ea.getSediliOccupati() + numSedili_, ea.getBagagliOccupati() + numBagagli_,
+            return AutobusDAO.updateAutobus(ea_.getSediliOccupati() + numSedili_, ea_.getBagagliOccupati() + numBagagli_,
                     idCorsaStringa_);
 
         } catch (DBConnectionException dbEx) {
@@ -359,6 +359,7 @@ public class GestioneTrasporto {
         } catch (DAOException ex) {
             throw new OperationException("\nOps, qualcosa e' andato storto...\n");
         }
+
     }
 
     /************* *************/

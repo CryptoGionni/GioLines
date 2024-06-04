@@ -422,3 +422,14 @@ ALTER TABLE TRATTA modify IDCORSA SMALLINT UNIQUE [42001-212]
 2024-05-28 09:45:27 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "ALTER TABLE TRATTA [*]MODIFY IDCORSA SMALLINT UNIQUE"; expected "., ADD, SET, RENAME, DROP, ALTER"; SQL statement:
 ALTER TABLE TRATTA MODIFY IDCORSA SMALLINT UNIQUE [42001-212]
+2024-06-04 17:02:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PROVA" already exists; SQL statement:
+CREATE TABLE prova(
+    idCorsa SMALLINT PRIMARY KEY,
+    sediliOccupati SMALLINT,
+    bagagliOccupati SMALLINT,
+    sediliMax SMALLINT,
+    bagagliMax SMALLINT,
+    dimensioneBagaglio FLOAT(2),
+    FOREIGN KEY(idCorsa) REFERENCES Corsa(id)
+) [42101-212]

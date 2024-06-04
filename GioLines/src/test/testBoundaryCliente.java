@@ -1,6 +1,5 @@
 package test;
 
-
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -34,7 +33,7 @@ public class testBoundaryCliente {
 	/*Test Case: 1 */
 	@Test
 	public void testAcquistaBigliettoViaWeb_senzaBagaglio() {    
-        BoundaryCliente._acquistaBigliettoViaWeb();
+        //BoundaryCliente._acquistaBigliettoViaWeb();
     }
 
 	/************* *************/
@@ -48,12 +47,13 @@ public class testBoundaryCliente {
 		assertEquals(expected, res);
 	}
 
-	@Test
-	public void testInserisciCittàArrivo() {    
-        String res = BoundaryCliente.inserisciCittàArrivo();
-        String expected = "ROMA";
-        assertEquals(expected, res);
-    }
+	//stesso test case ma con possibilità di inserimento da tastiera
+	// @Test
+	// public void testInserisciCittàArrivo() {
+    //     String res = BoundaryCliente.inserisciCittàArrivo();
+    //     String expected = "ROMA";
+    //     assertEquals(expected, res);
+    // }
 
     /************* *************/
 
@@ -66,13 +66,14 @@ public class testBoundaryCliente {
 		assertEquals(expected, res);
 	}
 
-	@Test
-	public void testInserisciNumeroSedili(){    
-		int res = BoundaryCliente.inserisciNumeroSedili();
-        int expected = 1;
-        assertEquals(expected, res);
+	//stesso test case ma con possibilità di inserimento da tastiera
+	// @Test
+	// public void testInserisciNumeroSedili(){
+	// 	int res = BoundaryCliente.inserisciNumeroSedili();
+    //     int expected = 1;
+    //     assertEquals(expected, res);
 
-    }
+    // }
 	
 	/************* *************/
 

@@ -1,6 +1,5 @@
 package test;
 
-
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -41,12 +40,13 @@ public class testBoundaryImpiegato {
         assertEquals(expected, res);
     }
 
-	@Test
-	public void testInserisciNumeroBagagli(){    
-		int res = BoundaryImpiegato.inserisciNumeroBagagli(3);
-        int expected = 1;
-        assertEquals(expected, res);
-    }
+	//stesso test case ma con possibilità di inserimento da tastiera
+	// @Test
+	// public void testInserisciNumeroBagagli(){    
+	// 	int res = BoundaryImpiegato.inserisciNumeroBagagli(3);
+    //     int expected = 1;
+    //     assertEquals(expected, res);
+    // }
 
     /************* *************/
 
@@ -59,12 +59,13 @@ public class testBoundaryImpiegato {
         assertEquals(expected, res);
     }
 
-    @Test
-	public void testInserisciDimensioneBagaglio(){    
-		String[] res = BoundaryImpiegato.inserisciDimensioneBagaglio();
-        String[] expected = {"3","3","3"};
-        assertSame(expected, res);
-    }
+	//stesso test case ma con possibilità di inserimento da tastiera
+    // @Test
+	// public void testInserisciDimensioneBagaglio(){   
+	// 	String[] res = BoundaryImpiegato.inserisciDimensioneBagaglio();
+    //     String[] expected = {"3","3","3"};
+    //     assertSame(expected, res);
+    // }
 
     /************* *************/
 
@@ -77,13 +78,13 @@ public class testBoundaryImpiegato {
         assertEquals(expected, res);
     }
 
-    @Test
-	public void testInserisciPrezzoBigliettoMassimo(){    
-		float res = BoundaryImpiegato.inserisciPrezzoBigliettoMassimo();
-		float expected = 1F;
-		assertSame(expected, res);
-
-	}
+	//stesso test case ma con possibilità di inserimento da tastiera
+    // @Test
+	// public void testInserisciPrezzoBigliettoMassimo(){    
+	// 	float res = BoundaryImpiegato.inserisciPrezzoBigliettoMassimo();
+	// 	float expected = 1F;
+	// 	assertSame(expected, res);
+	// }
 	
     /************* *************/
 
