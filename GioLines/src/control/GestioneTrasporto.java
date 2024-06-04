@@ -24,7 +24,8 @@ import exception.OperationException;
 public class GestioneTrasporto {
 
     private static GestioneTrasporto gC = null;
-
+    
+    //singleton
     public static GestioneTrasporto getInstance() {
         if (gC == null)
             gC = new GestioneTrasporto();
@@ -32,6 +33,25 @@ public class GestioneTrasporto {
         return gC;
     }
 
+    /************* Test Cases *************/
+
+    /*Test Case: 7 */
+    public boolean checkDimensioniBagaglio(float h, float l, float d, float h_, float l_, float d_){
+
+        if (h > h_ || l > l_ || d > d_) 
+        {
+            System.out.println("Dimensione bagaglio non rispettata\n");
+            return true;
+        }
+        return false;
+
+}
+    
+    /************* *************/
+
+    /************* use cases *************/
+
+    //use case 1
     public ArrayList<String> acquistaBigliettoViaWeb(
             String CITTAPARTENZA,
             String CITTAARRIVO,
@@ -134,21 +154,6 @@ public class GestioneTrasporto {
 
     }
 
-    /*Test Case: 7 */
-    public boolean checkDimensioniBagaglio(float h, float l, float d, float h_, float l_, float d_){
-            // assert DIMENSIONEBAGAGLIO <= ea.getDimensioneBagaglio() : "Dimensione
-            // bagaglio non rispettata";
-            if (h > h_ || l > l_ || d > d_) 
-            {
-                System.out.println("Dimensione bagaglio non rispettata\n");
-                return true;
-            }
-            return false;
-
-    }
-
-
-
     public void confermaAcquisto(ArrayList<String> propostaConfermata, int numSedili, int numBagagli, String mail)
             throws OperationException {
 
@@ -181,6 +186,7 @@ public class GestioneTrasporto {
 
     }
 
+    //use case 2
     public ArrayList<String> vendiBiglietto(
             String CITTAPARTENZA,
             String CITTAARRIVO,
@@ -303,16 +309,16 @@ public class GestioneTrasporto {
 
     }
 
+    /************* *************/
+
+    /************* secondary functions *************/
+
     private int stampa(String oraEmissione, String dataEmissione, boolean presenzaBagaglio) {
         return 1;
     }
 
     private int applicaSupplemento(int N) {
-        int res = 0;
-        for (int i = 1; i <= N; i++) {
-            res = res + 5;
-        }
-        return res;
+        return N * 5;
     }
 
     private float calcolaPrezzoTotale(float prezzoSingolo, int numeroBiglietti) {
@@ -343,7 +349,8 @@ public class GestioneTrasporto {
     }
 
     private int setNumeroSediliDisponibili(int numSedili_, int numBagagli_, String idCorsaStringa_)
-            throws OperationException {
+        
+        throws OperationException {
 
         EntityAutobus ea = null;
 
@@ -361,4 +368,5 @@ public class GestioneTrasporto {
         }
     }
 
+    /************* *************/
 }

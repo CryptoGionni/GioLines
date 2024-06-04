@@ -44,18 +44,16 @@ public class testBoundaryCliente {
     
 	@Test
 	public void testInserisciCittàArrivo() {    /*Test Case: 2 */
-        
-        // BoundaryCliente c = new BoundaryCliente.BoundaryCliente(); //così è non-static
-		String res = BoundaryCliente.inserisciCittàArrivo();
+        String res = BoundaryCliente.inserisciCittàArrivo();
         String expected = "ROMA";
-        assertEquals("non va", expected, res);
+        assertEquals(expected, res);
     }
     
 	@Test
 	public void testInserisciNumeroSedili(){    /*Test Case: 3 */
 		int res = BoundaryCliente.inserisciNumeroSedili();
         int expected = 1;
-        assertEquals("non va", expected, res);
+        assertEquals(expected, res);
 
     }
     
@@ -63,14 +61,23 @@ public class testBoundaryCliente {
 	public void testInserisciNumeroBagagli(){    /*Test Case: 4-5 */
 		int res = BoundaryCliente.inserisciNumeroBagagli(3);
         int expected = 1;
-        assertEquals("non va", expected, res);
+        assertEquals(expected, res);
     }
 
     @Test
 	public void testInserisciDimensioneBagaglio(){    /*Test Case: 6 */
 		String[] res = BoundaryCliente.inserisciDimensioneBagaglio();
         String[] expected = {"3","3","3"};
-        assertSame("non va", expected, res);
+        assertSame(expected, res);
     }
+
+	
+    @Test
+	public void testInserisciPrezzoBigliettoMassimo(){    /*Test Case: 8 */
+		float res = BoundaryCliente.inserisciPrezzoBigliettoMassimo();
+		float expected = 1F;
+		assertSame(expected, res);
+
+	}
 
 }

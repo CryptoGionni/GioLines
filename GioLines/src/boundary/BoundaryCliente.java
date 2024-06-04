@@ -143,6 +143,24 @@ public class BoundaryCliente {
 		return triplaArr;
 	}
 
+	public static float inserisciPrezzoBigliettoMassimo(){
+		
+		boolean pass = true;
+		float prezzo = 0F;
+
+		while (pass) {
+			System.out.println("Inserisci un prezzo massimo per un singolo biglietto:");
+			prezzo = Float.parseFloat(scan.nextLine());
+			if(prezzo<=0){
+				System.out.println("Prezzo biglietto non valido, riprova...\n");
+			}else{
+				pass = false;
+			}
+		}
+		return prezzo;
+
+	}
+
 	
 	private static void acquistaBigliettoViaWeb() {
 
@@ -169,9 +187,6 @@ public class BoundaryCliente {
 				try {
 					System.out.println("Inserisci una città di partenza:");
 					CITTAPARTENZA = scan.nextLine().toUpperCase();
-
-					// System.out.println("Inserisci una città di arrivo:");
-					// CITTAARRIVO = scan.nextLine().toUpperCase();
 
 					CITTAARRIVO = inserisciCittàArrivo();
 
@@ -220,9 +235,6 @@ public class BoundaryCliente {
 			while (!inputValido) {
 				try {
 
-					// System.out.println("Inserisci il numero di posti da acquistare:");
-					// NUMEROSEDILI = Integer.parseInt(scan.nextLine());
-
 					NUMEROSEDILI = inserisciNumeroSedili();
 
 					inputValido = true;
@@ -235,15 +247,7 @@ public class BoundaryCliente {
 			inputValido = false;
 			while (!inputValido) {
 				try {
-					// System.out.println(
-					// 		"Inserisci il numero di bagagli da portare \n(max 1 per persona, con supplemento di 5 euro/cad):");
-					// NUMEROBAGAGLI = Integer.parseInt(scan.nextLine());
 
-					// if (NUMEROBAGAGLI < NUMEROSEDILI) {
-					// 	inputValido = true;
-					// } else {
-					// 	System.out.println("Numero di bagagli maggiore del numero di posti, riprova...\n");
-					// }
 					NUMEROBAGAGLI = inserisciNumeroBagagli(NUMEROSEDILI);
 					
 					inputValido = true;
@@ -257,13 +261,7 @@ public class BoundaryCliente {
 			inputValido = false;
 			while (!inputValido) {
 				try {
-					// System.out.println("Inserisci la dimensione del bagaglio (HxLxD):");
-					// String tripla = scan.nextLine();
-					// String regex = "[x]";
-					// String[] triplaArr = tripla.split(regex);
-					// for (int i = 0; i < 3; i++) {
-					// 	DIMENSIONEBAGAGLIO.set(i, Float.parseFloat(triplaArr[i]));
-					// }
+
 					if(NUMEROBAGAGLI>0){
 						String[] triplaArr = inserisciDimensioneBagaglio();
 						for (int i = 0; i < 3; i++) {
@@ -281,9 +279,9 @@ public class BoundaryCliente {
 			inputValido = false;
 			while (!inputValido) {
 				try {
-					System.out.println("Inserisci un prezzo massimo per un singolo biglietto:");
-					PREZZOBIGLIETTIMASSIMO = Float.parseFloat(scan.nextLine());
-
+					// System.out.println("Inserisci un prezzo massimo per un singolo biglietto:");
+					// PREZZOBIGLIETTIMASSIMO = Float.parseFloat(scan.nextLine());
+					PREZZOBIGLIETTIMASSIMO = inserisciPrezzoBigliettoMassimo();
 					inputValido = true;
 				} catch (NumberFormatException nE) {
 					System.out.println("Errore, inserire un numero valido...\n");
