@@ -1,6 +1,8 @@
 package boundary;
 
 import java.sql.Time;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,6 +21,8 @@ public class BoundaryImpiegato {
 	public static void main(String[] args) {
 
 		boolean exit = false;
+
+		printLogo();
 
 		while (!exit) {
 
@@ -323,6 +327,25 @@ public class BoundaryImpiegato {
 			System.out.println();
 		}
 
+	}
+
+	/************* *************/
+
+    /************* secondary functions *************/
+
+	public static void printLogo(){
+		try {
+			File myObj = new File("logo.txt");
+			Scanner myReader = new Scanner(myObj);
+			while (myReader.hasNextLine()) {
+				String data = myReader.nextLine();
+				System.out.println(data);
+			}
+			myReader.close();
+		} catch (FileNotFoundException e) {
+		System.out.println("An error occurred.");
+		e.printStackTrace();
+		}
 	}
 
 	/************* *************/

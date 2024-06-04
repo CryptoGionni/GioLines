@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "printLogo",
+            "request": "launch",
+            "mainClass": "test.printLogo",
+            "projectName": "GioLines_c4487aa3"
+        },
+        {
+            "type": "java",
             "name": "TrattaDAO",
             "request": "launch",
             "mainClass": "database.TrattaDAO",

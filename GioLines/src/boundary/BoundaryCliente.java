@@ -1,6 +1,8 @@
 package boundary;
 
 import java.sql.Time;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,6 +23,8 @@ public class BoundaryCliente {
 	public static void main(String[] args) {
 
 		boolean exit = false;
+
+		printLogo();
 
 		while (!exit) {
 
@@ -52,7 +56,6 @@ public class BoundaryCliente {
 		acquistaBigliettoViaWeb();
 	}
 	
-
 	/*Test Case: 2 */
 	public static String inserisciCittàArrivo() {
 
@@ -84,8 +87,6 @@ public class BoundaryCliente {
 		}
 		return true;
 	}
-
-
 
 	/*Test Case: 3 */
 	public static int inserisciNumeroSedili() {
@@ -120,74 +121,6 @@ public class BoundaryCliente {
 	
 	/************* *************/
 
-	public static int inserisciNumeroBagagli(int sed) {
-
-		boolean pass = true;
-		int bag = 0;
-
-		while (pass) {
-
-			System.out.println(
-				"Inserisci il numero di bagagli da portare: \n(max 1 per persona, con supplemento di 5 euro/cad)");
-			bag = Integer.parseInt(scan.nextLine());
-
-			if (bag < 0){
-				System.out.println("Numero di bagagli non valido, riprova...\n");
-			}
-			else if (bag <= sed && bag >= 0) {
-				pass = false;
-			} else {
-				System.out.println("Numero di bagagli maggiore del numero di posti, riprova...\n");
-			}
-		}
-		return bag;
-	}
-
-	public static String[] inserisciDimensioneBagaglio() {
-
-		boolean pass = true;
-		String regex = "[x]";
-		String tripla = "";
-
-		while (pass) {
-
-
-			System.out.println("Inserisci la dimensione del bagaglio (HxLxD):");
-			tripla = scan.nextLine();		
-
-			if (tripla.contains("x")){			
-				if(tripla.substring(tripla.lastIndexOf("x")).contains("x")){
-					pass = false;
-				}else{
-					System.out.println("Inserire le dimensioni nel formato giusto, riprova...\n");
-				}
-			} else {
-				System.out.println("Inserire le dimensioni nel formato giusto, riprova...\n");
-			}
-		}
-
-		String[] triplaArr = tripla.split(regex);
-		return triplaArr;
-	}
-
-	public static float inserisciPrezzoBigliettoMassimo(){
-		
-		boolean pass = true;
-		float prezzo = 0F;
-
-		while (pass) {
-			System.out.println("Inserisci un prezzo massimo per un singolo biglietto:");
-			prezzo = Float.parseFloat(scan.nextLine());
-			if(prezzo<=0){
-				System.out.println("Prezzo biglietto non valido, riprova...\n");
-			}else{
-				pass = false;
-			}
-		}
-		return prezzo;
-
-	}
-    
     /************* use case *************/
 	
 	private static void acquistaBigliettoViaWeb() {
@@ -390,6 +323,93 @@ public class BoundaryCliente {
 
 	}
 
+	/************* *************/
+
+    /************* secondary functions *************/
+
+	public static void printLogo(){
+		try {
+			File myObj = new File("logo.txt");
+			Scanner myReader = new Scanner(myObj);
+			while (myReader.hasNextLine()) {
+				String data = myReader.nextLine();
+				System.out.println(data);
+			}
+			myReader.close();
+		} catch (FileNotFoundException e) {
+		System.out.println("An error occurred.");
+		e.printStackTrace();
+		}
+	}
+
+	public static int inserisciNumeroBagagli(int sed) {
+
+		boolean pass = true;
+		int bag = 0;
+
+		while (pass) {
+
+			System.out.println(
+				"Inserisci il numero di bagagli da portare: \n(max 1 per persona, con supplemento di 5 euro/cad)");
+			bag = Integer.parseInt(scan.nextLine());
+
+			if (bag < 0){
+				System.out.println("Numero di bagagli non valido, riprova...\n");
+			}
+			else if (bag <= sed && bag >= 0) {
+				pass = false;
+			} else {
+				System.out.println("Numero di bagagli maggiore del numero di posti, riprova...\n");
+			}
+		}
+		return bag;
+	}
+
+	public static String[] inserisciDimensioneBagaglio() {
+
+		boolean pass = true;
+		String regex = "[x]";
+		String tripla = "";
+
+		while (pass) {
+
+
+			System.out.println("Inserisci la dimensione del bagaglio (HxLxD):");
+			tripla = scan.nextLine();		
+
+			if (tripla.contains("x")){			
+				if(tripla.substring(tripla.lastIndexOf("x")).contains("x")){
+					pass = false;
+				}else{
+					System.out.println("Inserire le dimensioni nel formato giusto, riprova...\n");
+				}
+			} else {
+				System.out.println("Inserire le dimensioni nel formato giusto, riprova...\n");
+			}
+		}
+
+		String[] triplaArr = tripla.split(regex);
+		return triplaArr;
+	}
+
+	public static float inserisciPrezzoBigliettoMassimo(){
+		
+		boolean pass = true;
+		float prezzo = 0F;
+
+		while (pass) {
+			System.out.println("Inserisci un prezzo massimo per un singolo biglietto:");
+			prezzo = Float.parseFloat(scan.nextLine());
+			if(prezzo<=0){
+				System.out.println("Prezzo biglietto non valido, riprova...\n");
+			}else{
+				pass = false;
+			}
+		}
+		return prezzo;
+
+	}
+    
 	/************* *************/
 
 }
