@@ -52,6 +52,7 @@ public class BoundaryCliente {
 		acquistaBigliettoViaWeb();
 	}
 	
+
 	/*Test Case: 2 */
 	public static String inserisciCittàArrivo() {
 
@@ -63,15 +64,28 @@ public class BoundaryCliente {
 			System.out.println("Inserisci una città di arrivo:");
 			città = scan.nextLine();
 
-			if (città.matches(".*\\d.*")) {
-				System.out.println("Città non valida!");
-			} else {
-				pass = false;
-			}
+			// if (città.matches(".*\\d.*")) {
+			// 	System.out.println("Città non valida!");
+			// } else {
+			// 	pass = false;
+			// }
+
+			pass = checkCittàArrivo(città);
 
 		}
 		return città.toUpperCase();
 	}
+
+	public static boolean checkCittàArrivo(String città){
+		if (città.matches(".*\\d.*")) {
+			System.out.println("Città non valida!");
+		} else {
+			return false;
+		}
+		return true;
+	}
+
+
 
 	/*Test Case: 3 */
 	public static int inserisciNumeroSedili() {
@@ -84,13 +98,24 @@ public class BoundaryCliente {
 			System.out.println("Inserisci il numero di posti da acquistare:");
 			sed = Integer.parseInt(scan.nextLine());
 
-			if (sed <= 0) {
-				System.out.println("Numero di posti non valido!");
-			} else {
-				pass = false;
-			}
+			// if (sed <= 0) {
+			// 	System.out.println("Numero di posti non valido!");
+			// } else {
+			// 	pass = false;
+			// }
+
+			pass = checkNumeroSedili(sed);
 		}
 		return sed;
+	}
+
+	public static boolean checkNumeroSedili(int sed){
+		if (sed <= 0) {
+			System.out.println("Numero di posti non valido!");
+		} else {
+			return false;
+		}
+		return true;
 	}
 	
 	/************* *************/

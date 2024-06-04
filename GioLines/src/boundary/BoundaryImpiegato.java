@@ -58,16 +58,31 @@ public class BoundaryImpiegato {
 				"Inserisci il numero di bagagli da portare: \n(max 1 per persona, con supplemento di 5 euro/cad)");
 			bag = Integer.parseInt(scan.nextLine());
 
-			if (bag < 0){
-				System.out.println("Numero di bagagli non valido, riprova...\n");
-			}
-			else if (bag <= sed && bag >= 0) {
-				pass = false;
-			} else {
-				System.out.println("Numero di bagagli maggiore del numero di posti, riprova...\n");
-			}
+			// if (bag < 0){
+			// 	System.out.println("Numero di bagagli non valido, riprova...\n");
+			// }
+			// else if (bag <= sed && bag >= 0) {
+			// 	pass = false;
+			// } else {
+			// 	System.out.println("Numero di bagagli maggiore del numero di posti, riprova...\n");
+			// }
+
+			pass = checkNumeroBagagli(bag, sed);
+
 		}
 		return bag;
+	}
+
+	public static boolean checkNumeroBagagli(int bag, int sed){
+		if (bag < 0){
+			System.out.println("Numero di bagagli non valido, riprova...\n");
+		}
+		else if (bag <= sed && bag >= 0) {
+			return false;
+		} else {
+			System.out.println("Numero di bagagli maggiore del numero di posti, riprova...\n");
+		}
+		return true;
 	}
 
 	/*Test Case: 6 */
@@ -83,19 +98,35 @@ public class BoundaryImpiegato {
 			System.out.println("Inserisci la dimensione del bagaglio (HxLxD):");
 			tripla = scan.nextLine();		
 
-			if (tripla.contains("x")){			
-				if(tripla.substring(tripla.lastIndexOf("x")).contains("x")){
-					pass = false;
-				}else{
-					System.out.println("Inserire le dimensioni nel formato giusto, riprova...\n");
-				}
-			} else {
-				System.out.println("Inserire le dimensioni nel formato giusto, riprova...\n");
-			}
+			// if (tripla.contains("x")){			
+			// 	if(tripla.substring(tripla.lastIndexOf("x")).contains("x")){
+			// 		pass = false;
+			// 	}else{
+			// 		System.out.println("Inserire le dimensioni nel formato giusto, riprova...\n");
+			// 	}
+			// } else {
+			// 	System.out.println("Inserire le dimensioni nel formato giusto, riprova...\n");
+			// }
+
+			pass = checkDimensioneBagaglio(tripla);
 		}
 
 		String[] triplaArr = tripla.split(regex);
 		return triplaArr;
+	}
+
+	public static boolean checkDimensioneBagaglio(String tripla){
+		
+		if (tripla.contains("x")){			
+			if(tripla.substring(tripla.lastIndexOf("x")).contains("x")){
+				return false;
+			}else{
+				System.out.println("Inserire le dimensioni nel formato giusto, riprova...\n");
+			}
+		} else {
+			System.out.println("Inserire le dimensioni nel formato giusto, riprova...\n");
+		}
+		return true;
 	}
 
 	/*Test Case: 8 */
@@ -107,14 +138,24 @@ public class BoundaryImpiegato {
 		while (pass) {
 			System.out.println("Inserisci un prezzo massimo per un singolo biglietto:");
 			prezzo = Float.parseFloat(scan.nextLine());
-			if(prezzo<=0){
-				System.out.println("Prezzo biglietto non valido, riprova...\n");
-			}else{
-				pass = false;
-			}
+			// if(prezzo<=0){
+			// 	System.out.println("Prezzo biglietto non valido, riprova...\n");
+			// }else{
+			// 	pass = false;
+			// }
+			pass = checkPrezzoBigliettoMassimo(prezzo);
 		}
 		return prezzo;
 
+	}
+
+	public static boolean checkPrezzoBigliettoMassimo(float prezzo){
+		if(prezzo<=0){
+			System.out.println("Prezzo biglietto non valido, riprova...\n");
+		}else{
+			return false;
+		}
+		return true;
 	}
     
 	/************* *************/

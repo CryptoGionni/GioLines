@@ -31,28 +31,60 @@ public class testBoundaryImpiegato {
 	public void tearDown() throws Exception {
 	}
 
-    
+    /*Test Case: 4-5 */
 	@Test
-	public void testInserisciNumeroBagagli(){    /*Test Case: 4-5 */
+	public void testCheckNumeroBagagli(){   
+		int NUMEROBAGAGLI = 3;
+		int NUMEROSEDILI = 4; 
+		boolean res = BoundaryImpiegato.checkNumeroBagagli(NUMEROBAGAGLI, NUMEROSEDILI);
+        boolean expected = false;
+        assertEquals(expected, res);
+    }
+
+	@Test
+	public void testInserisciNumeroBagagli(){    
 		int res = BoundaryImpiegato.inserisciNumeroBagagli(3);
         int expected = 1;
         assertEquals(expected, res);
     }
 
+    /************* *************/
+
+	/*Test Case: 6 */
+	@Test
+	public void testCheckDimensioneBagaglio(){    
+		String DIMENSIONIBAGAGLIO = "3x3x3";
+		boolean res = BoundaryImpiegato.checkDimensioneBagaglio(DIMENSIONIBAGAGLIO);
+        boolean expected = false;
+        assertEquals(expected, res);
+    }
+
     @Test
-	public void testInserisciDimensioneBagaglio(){    /*Test Case: 6 */
+	public void testInserisciDimensioneBagaglio(){    
 		String[] res = BoundaryImpiegato.inserisciDimensioneBagaglio();
         String[] expected = {"3","3","3"};
         assertSame(expected, res);
     }
 
-	
+    /************* *************/
+
+	/*Test Case: 8 */
+	@Test
+	public void testCheckPrezzoBigliettoMassimo(){    
+		float PREZZOBIGLIETTO = 12.3F;
+		boolean res = BoundaryImpiegato.checkPrezzoBigliettoMassimo(PREZZOBIGLIETTO);
+        boolean expected = false;
+        assertEquals(expected, res);
+    }
+
     @Test
-	public void testInserisciPrezzoBigliettoMassimo(){    /*Test Case: 8 */
+	public void testInserisciPrezzoBigliettoMassimo(){    
 		float res = BoundaryImpiegato.inserisciPrezzoBigliettoMassimo();
 		float expected = 1F;
 		assertSame(expected, res);
 
 	}
+	
+    /************* *************/
 
 }

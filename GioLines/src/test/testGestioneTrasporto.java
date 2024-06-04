@@ -34,17 +34,40 @@ public class testGestioneTrasporto {
 	public void tearDown() throws Exception {
 	}
 
+    @Test
+	public void testCheckDimensioniBagaglio(){    /*Test Case: 7 */
+		GestioneTrasporto gestioneTraspostoIstance = GestioneTrasporto.getInstance();//singleton
+		float DIMENSIONEBAGAGLIO_H = 3F;
+		float DIMENSIONEBAGAGLIO_L = 3F;
+		float DIMENSIONEBAGAGLIO_D = 3F;
+		float DIMENSIONEBAGAGLIO_H_DB = 4F;
+		float DIMENSIONEBAGAGLIO_L_DB = 4F;
+		float DIMENSIONEBAGAGLIO_D_DB = 4F;
+
+		boolean res = gestioneTraspostoIstance.checkDimensioniBagaglio(
+			DIMENSIONEBAGAGLIO_H,
+			DIMENSIONEBAGAGLIO_L,
+			DIMENSIONEBAGAGLIO_D,
+			DIMENSIONEBAGAGLIO_H_DB,
+			DIMENSIONEBAGAGLIO_L_DB,
+			DIMENSIONEBAGAGLIO_D_DB		
+			);
+
+        boolean expected = false;
+        assertEquals(expected, res);
+    }
+
 	@Test
-	public void testAcquistaBigliettoViaWeb() {    /*Test Case: A */
+	public void testAcquistaBigliettoViaWeb() {    /*Test Case: A (extra) */
 		GestioneTrasporto gestioneTraspostoIstance = GestioneTrasporto.getInstance();//singleton
 
 		try{
 
 			ArrayList<String> propostaTrovata = null;
 			ArrayList<Float> DIMENSIONEBAGAGLIO = new ArrayList<Float>();
-			DIMENSIONEBAGAGLIO.add(12F);
-			DIMENSIONEBAGAGLIO.add(18F);
-			DIMENSIONEBAGAGLIO.add(10F);
+			DIMENSIONEBAGAGLIO.add(3F);
+			DIMENSIONEBAGAGLIO.add(3F);
+			DIMENSIONEBAGAGLIO.add(3F);
 			Time ORARIOPARTENZA = new Time(new SimpleDateFormat("HH:mm").parse("11:22").getTime());
 
 			propostaTrovata = gestioneTraspostoIstance.acquistaBigliettoViaWeb(
@@ -69,15 +92,5 @@ public class testGestioneTrasporto {
 
 
 	}
-
-    @Test
-	public void testCheckDimensioniBagaglio(){    /*Test Case: 7 */
-		GestioneTrasporto gestioneTraspostoIstance = GestioneTrasporto.getInstance();//singleton
-
-		boolean res = gestioneTraspostoIstance.checkDimensioniBagaglio(3,3,3,4,4,4);
-        boolean expected = false;
-        assertEquals(expected, res);
-    }
-
 
 }

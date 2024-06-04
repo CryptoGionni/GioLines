@@ -107,14 +107,7 @@ public class GestioneTrasporto {
             if (NUMEROBAGAGLI + ea.getBagagliOccupati() > ea.getBagagliMax()) {
                 throw new OperationException("Spazio bagagli disponibili insufficienti");
             }
-
-            // assert DIMENSIONEBAGAGLIO <= ea.getDimensioneBagaglio() : "Dimensione
-            // bagaglio non rispettata";
-            // if (DIMENSIONEBAGAGLIO.get(0) > ea.getDimensioneBagaglioH() ||
-            //         DIMENSIONEBAGAGLIO.get(1) > ea.getDimensioneBagaglioL() ||
-            //         DIMENSIONEBAGAGLIO.get(2) > ea.getDimensioneBagaglioD()) {
-            //     throw new OperationException("Dimensione bagaglio non rispettata");
-            // }
+           
             if(checkDimensioniBagaglio(
                     DIMENSIONEBAGAGLIO.get(0),
                     DIMENSIONEBAGAGLIO.get(1),
