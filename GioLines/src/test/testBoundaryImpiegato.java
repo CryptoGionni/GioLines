@@ -71,8 +71,8 @@ public class testBoundaryImpiegato {
 	/*Test Case: 8 */
 	@Test
 	public void testCheckPrezzoBigliettoMassimo(){    
-		float PREZZOBIGLIETTO = 12.3F;
-		boolean res = BoundaryImpiegato.checkPrezzoBigliettoMassimo(PREZZOBIGLIETTO);
+		float PREZZOBIGLIETTIMASSIMO = 12.3F;
+		boolean res = BoundaryImpiegato.checkPrezzoBigliettoMassimo(PREZZOBIGLIETTIMASSIMO);
         boolean expected = false;
         assertEquals(expected, res);
     }

@@ -34,8 +34,9 @@ public class testGestioneTrasporto {
 	public void tearDown() throws Exception {
 	}
 
+	/*Test Case: 7 */
     @Test
-	public void testCheckDimensioniBagaglio(){    /*Test Case: 7 */
+	public void testCheckDimensioniBagaglio(){    
 		GestioneTrasporto gestioneTraspostoIstance = GestioneTrasporto.getInstance();//singleton
 		float DIMENSIONEBAGAGLIO_H = 3F;
 		float DIMENSIONEBAGAGLIO_L = 3F;
@@ -57,8 +58,9 @@ public class testGestioneTrasporto {
         assertEquals(expected, res);
     }
 
+	/*Test Case: A (extra) */
 	@Test
-	public void testAcquistaBigliettoViaWeb() {    /*Test Case: A (extra) */
+	public void testAcquistaBigliettoViaWeb() {    
 		GestioneTrasporto gestioneTraspostoIstance = GestioneTrasporto.getInstance();//singleton
 
 		try{
