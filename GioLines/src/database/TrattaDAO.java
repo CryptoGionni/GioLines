@@ -58,7 +58,7 @@ public class TrattaDAO {
 	// public static void main(String[] args) {
 		
 	// 	try {
-    //         System.out.println(readTratta("Napoli","Roma"));
+    //         System.out.println(readTratta("NAPOLI","ROMA"));
 	// 	} catch (Exception e) {
 	// 		e.printStackTrace();
 	// 	}	

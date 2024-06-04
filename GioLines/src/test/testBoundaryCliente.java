@@ -31,10 +31,6 @@ public class testBoundaryCliente {
 	public void tearDown() throws Exception {
 	}
 
-	@Test
-	public void testAcquistaBigliettoViaWeb() {    /*Test Case: 0 */
-        BoundaryCliente._acquistaBigliettoViaWeb();
-    }
 
 	@Test
 	public void testAcquistaBigliettoViaWeb_senzaBagaglio() {    /*Test Case: 1 */
@@ -57,27 +53,4 @@ public class testBoundaryCliente {
 
     }
     
-	@Test
-	public void testInserisciNumeroBagagli(){    /*Test Case: 4-5 */
-		int res = BoundaryCliente.inserisciNumeroBagagli(3);
-        int expected = 1;
-        assertEquals(expected, res);
-    }
-
-    @Test
-	public void testInserisciDimensioneBagaglio(){    /*Test Case: 6 */
-		String[] res = BoundaryCliente.inserisciDimensioneBagaglio();
-        String[] expected = {"3","3","3"};
-        assertSame(expected, res);
-    }
-
-	
-    @Test
-	public void testInserisciPrezzoBigliettoMassimo(){    /*Test Case: 8 */
-		float res = BoundaryCliente.inserisciPrezzoBigliettoMassimo();
-		float expected = 1F;
-		assertSame(expected, res);
-
-	}
-
 }

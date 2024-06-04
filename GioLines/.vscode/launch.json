@@ -6,13 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "TrattaDAO",
+            "request": "launch",
+            "mainClass": "database.TrattaDAO",
+            "projectName": "GioLines_c4487aa3"
+        },
+        {
+            "type": "java",
             "name": "Launch JUnit Tests",
             "request": "launch",
             "mainClass": "org.junit.platform.console.ConsoleLauncher",
             "args": [
                 "--scan-classpath"
             ],
-            "console": "integratedTerminal"  // Puoi cambiare a "externalTerminal" per terminale esterno
+            "console": "integratedTerminal"
         },
         {
             "type": "java",

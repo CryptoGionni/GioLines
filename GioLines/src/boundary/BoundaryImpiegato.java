@@ -43,6 +43,84 @@ public class BoundaryImpiegato {
 
 	}
 
+
+	/************* Test Cases Functions *************/
+
+	/*Test Case: 4-5 */
+	public static int inserisciNumeroBagagli(int sed) {
+
+		boolean pass = true;
+		int bag = 0;
+
+		while (pass) {
+
+			System.out.println(
+				"Inserisci il numero di bagagli da portare: \n(max 1 per persona, con supplemento di 5 euro/cad)");
+			bag = Integer.parseInt(scan.nextLine());
+
+			if (bag < 0){
+				System.out.println("Numero di bagagli non valido, riprova...\n");
+			}
+			else if (bag <= sed && bag >= 0) {
+				pass = false;
+			} else {
+				System.out.println("Numero di bagagli maggiore del numero di posti, riprova...\n");
+			}
+		}
+		return bag;
+	}
+
+	/*Test Case: 6 */
+	public static String[] inserisciDimensioneBagaglio() {
+
+		boolean pass = true;
+		String regex = "[x]";
+		String tripla = "";
+
+		while (pass) {
+
+
+			System.out.println("Inserisci la dimensione del bagaglio (HxLxD):");
+			tripla = scan.nextLine();		
+
+			if (tripla.contains("x")){			
+				if(tripla.substring(tripla.lastIndexOf("x")).contains("x")){
+					pass = false;
+				}else{
+					System.out.println("Inserire le dimensioni nel formato giusto, riprova...\n");
+				}
+			} else {
+				System.out.println("Inserire le dimensioni nel formato giusto, riprova...\n");
+			}
+		}
+
+		String[] triplaArr = tripla.split(regex);
+		return triplaArr;
+	}
+
+	/*Test Case: 8 */
+	public static float inserisciPrezzoBigliettoMassimo(){
+		
+		boolean pass = true;
+		float prezzo = 0F;
+
+		while (pass) {
+			System.out.println("Inserisci un prezzo massimo per un singolo biglietto:");
+			prezzo = Float.parseFloat(scan.nextLine());
+			if(prezzo<=0){
+				System.out.println("Prezzo biglietto non valido, riprova...\n");
+			}else{
+				pass = false;
+			}
+		}
+		return prezzo;
+
+	}
+    
+	/************* *************/
+
+    /************* use case *************/
+
 	private static void vendiBiglietto() {
 
 		String CITTAPARTENZA = null, CITTAARRIVO = null;
@@ -115,28 +193,11 @@ public class BoundaryImpiegato {
 			inputValido = false;
 			while (!inputValido) {
 				try {
-					System.out.println(
-							"Inserisci il numero di bagagli da portare: \n(max 1 per persona, con supplemento di 5 euro/cad)");
-					NUMEROBAGAGLI = Integer.parseInt(scan.nextLine());
 
-					if (NUMEROBAGAGLI < NUMEROSEDILI) {
-						inputValido = true;
-					} else {
-						System.out.println("Numero di bagagli maggiore del numero di posti, riprova...\n");
-					}
-				} catch (NumberFormatException nE) {
-					System.out.println("Errore, inserire un numero valido...\n");
-				}
-			}
-
-			/* acquisizione input PREZZOBIGLIETTIMASSIMO */
-			inputValido = false;
-			while (!inputValido) {
-				try {
-					System.out.println("Inserisci un prezzo massimo per un singolo biglietto:");
-					PREZZOBIGLIETTIMASSIMO = Float.parseFloat(scan.nextLine());
-
+					NUMEROBAGAGLI = inserisciNumeroBagagli(NUMEROSEDILI);
+					
 					inputValido = true;
+
 				} catch (NumberFormatException nE) {
 					System.out.println("Errore, inserire un numero valido...\n");
 				}
@@ -146,20 +207,30 @@ public class BoundaryImpiegato {
 			inputValido = false;
 			while (!inputValido) {
 				try {
-					System.out.println("Inserisci la dimensione del bagaglio (HxLxD):");
-					String tripla = scan.nextLine();
-					String regex = "[x]";
-					String[] triplaArr = tripla.split(regex);
-					for (int i = 0; i < 3; i++) {
-						DIMENSIONEBAGAGLIO.set(i, Float.parseFloat(triplaArr[i]));
-					}
 
+					if(NUMEROBAGAGLI>0){
+						String[] triplaArr = inserisciDimensioneBagaglio();
+						for (int i = 0; i < 3; i++) {
+							DIMENSIONEBAGAGLIO.set(i, Float.parseFloat(triplaArr[i]));
+						}
+					}
+					
 					inputValido = true;
 				} catch (NumberFormatException nE) {
 					System.out.println("Errore, inserire le dimensioni nel formato giusto...\n");
 				}
 			}
 
+			/* acquisizione input PREZZOBIGLIETTIMASSIMO */
+			inputValido = false;
+			while (!inputValido) {
+				try {
+					PREZZOBIGLIETTIMASSIMO = inserisciPrezzoBigliettoMassimo();
+					inputValido = true;
+				} catch (NumberFormatException nE) {
+					System.out.println("Errore, inserire un numero valido...\n");
+				}
+			}
 			propostaTrovata = gestioneTraspostoIstance.vendiBiglietto(
 					CITTAPARTENZA,
 					CITTAARRIVO,
@@ -212,5 +283,7 @@ public class BoundaryImpiegato {
 		}
 
 	}
+
+	/************* *************/
 
 }

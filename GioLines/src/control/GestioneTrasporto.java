@@ -33,7 +33,7 @@ public class GestioneTrasporto {
         return gC;
     }
 
-    /************* Test Cases *************/
+    /************* Test Cases Functions *************/
 
     /*Test Case: 7 */
     public boolean checkDimensioniBagaglio(float h, float l, float d, float h_, float l_, float d_){

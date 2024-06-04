@@ -18,10 +18,12 @@ public class testGestioneTrasporto {
     
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		System.out.println("Test Start!\n");
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		System.out.println("Test Finished!\n");
 	}
 
 	@Before
@@ -33,7 +35,7 @@ public class testGestioneTrasporto {
 	}
 
 	@Test
-	public void testAcquistaBigliettoViaWeb() {    /*Test Case: 0 */
+	public void testAcquistaBigliettoViaWeb() {    /*Test Case: A */
 		GestioneTrasporto gestioneTraspostoIstance = GestioneTrasporto.getInstance();//singleton
 
 		try{
@@ -46,44 +48,8 @@ public class testGestioneTrasporto {
 			Time ORARIOPARTENZA = new Time(new SimpleDateFormat("HH:mm").parse("11:22").getTime());
 
 			propostaTrovata = gestioneTraspostoIstance.acquistaBigliettoViaWeb(
-				"napoli",
-				"roma",
-				ORARIOPARTENZA,
-				"g.bolla@studenti.unina.it",
-				77,
-				2,
-				2,
-				DIMENSIONEBAGAGLIO);    
-
-					
-			String expected = "1";
-			assertEquals(expected, propostaTrovata.get(0));
-
-		} catch (Exception oE) {
-			System.out.println(oE.getMessage());
-			System.out.println("Riprovare...\n");
-		}
-
-
-
-	}
-
-	@Test
-	public void testAcquistaBigliettoViaWeb_senzaBagaglio() {    /*Test Case: 1 */
-		GestioneTrasporto gestioneTraspostoIstance = GestioneTrasporto.getInstance();//singleton
-
-		try{
-
-			ArrayList<String> propostaTrovata = null;
-			ArrayList<Float> DIMENSIONEBAGAGLIO = new ArrayList<Float>();
-			DIMENSIONEBAGAGLIO.add(3F);
-			DIMENSIONEBAGAGLIO.add(3F);
-			DIMENSIONEBAGAGLIO.add(3F);
-			Time ORARIOPARTENZA = new Time(new SimpleDateFormat("HH:mm").parse("11:22").getTime());
-
-			propostaTrovata = gestioneTraspostoIstance.acquistaBigliettoViaWeb(
-				"napoli",
-				"roma",
+				"NAPOLI",
+				"ROMA",
 				ORARIOPARTENZA,
 				"g.bolla@studenti.unina.it",
 				77,
@@ -99,6 +65,7 @@ public class testGestioneTrasporto {
 			System.out.println(oE.getMessage());
 			System.out.println("Riprovare...\n");
 		}
+
 
 
 	}

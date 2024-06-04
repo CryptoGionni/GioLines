@@ -44,6 +44,8 @@ public class BoundaryCliente {
 		System.out.println("Arrivederci!");
 
 	}
+  
+	/************* Test Cases Functions *************/
 
 	/*Test Case: 1 */
 	public static void _acquistaBigliettoViaWeb(){
@@ -90,8 +92,9 @@ public class BoundaryCliente {
 		}
 		return sed;
 	}
+	
+	/************* *************/
 
-	/*Test Case: 4-5 */
 	public static int inserisciNumeroBagagli(int sed) {
 
 		boolean pass = true;
@@ -115,7 +118,6 @@ public class BoundaryCliente {
 		return bag;
 	}
 
-	/*Test Case: 6 */
 	public static String[] inserisciDimensioneBagaglio() {
 
 		boolean pass = true;
@@ -160,7 +162,8 @@ public class BoundaryCliente {
 		return prezzo;
 
 	}
-
+    
+    /************* use case *************/
 	
 	private static void acquistaBigliettoViaWeb() {
 
@@ -279,8 +282,6 @@ public class BoundaryCliente {
 			inputValido = false;
 			while (!inputValido) {
 				try {
-					// System.out.println("Inserisci un prezzo massimo per un singolo biglietto:");
-					// PREZZOBIGLIETTIMASSIMO = Float.parseFloat(scan.nextLine());
 					PREZZOBIGLIETTIMASSIMO = inserisciPrezzoBigliettoMassimo();
 					inputValido = true;
 				} catch (NumberFormatException nE) {
@@ -363,5 +364,7 @@ public class BoundaryCliente {
 		}
 
 	}
+
+	/************* *************/
 
 }
