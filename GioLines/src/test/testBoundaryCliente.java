@@ -41,9 +41,9 @@ public class testBoundaryCliente {
     /*Test Case: 2 */	
 	@Test
 	public void tesCheckCittàArrivo(){
-		String CITTAARRIVO = "roma";
+		String CITTAARRIVO = "r0m4";
 		boolean res = BoundaryCliente.checkCittàArrivo(CITTAARRIVO);
-		boolean expected = false;
+		boolean expected = true;
 		assertEquals(expected, res);
 	}
 
@@ -60,9 +60,9 @@ public class testBoundaryCliente {
 	/*Test Case: 3 */
 	@Test
 	public void testCheckNumeroSedili(){
-		int NUMEROSEDILI = 2;
+		int NUMEROSEDILI = -2;
 		boolean res = BoundaryCliente.checkNumeroSedili(NUMEROSEDILI);
-		boolean expected = false;
+		boolean expected = true;
 		assertEquals(expected, res);
 	}
 

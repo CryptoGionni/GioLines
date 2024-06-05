@@ -42,13 +42,13 @@ public class testGestioneTrasporto {
 	public void testCheckDimensioniBagaglio(){    
 		GestioneTrasporto gestioneTraspostoIstance = GestioneTrasporto.getInstance();//singleton
 		
-		float DIMENSIONEBAGAGLIO_H = 3F;
-		float DIMENSIONEBAGAGLIO_L = 3F;
-		float DIMENSIONEBAGAGLIO_D = 3F;
+		float DIMENSIONEBAGAGLIO_H = 12F;
+		float DIMENSIONEBAGAGLIO_L = 18F;
+		float DIMENSIONEBAGAGLIO_D = 10F;
 
-		float DIMENSIONEBAGAGLIO_H_DB = 4F;
-		float DIMENSIONEBAGAGLIO_L_DB = 4F;
-		float DIMENSIONEBAGAGLIO_D_DB = 4F;
+		float DIMENSIONEBAGAGLIO_H_DB = 12F;
+		float DIMENSIONEBAGAGLIO_L_DB = 18F;
+		float DIMENSIONEBAGAGLIO_D_DB = 7F;
 
 		boolean res = gestioneTraspostoIstance.checkDimensioniBagaglio(
 			DIMENSIONEBAGAGLIO_H,
@@ -59,7 +59,7 @@ public class testGestioneTrasporto {
 			DIMENSIONEBAGAGLIO_D_DB		
 			);
 
-        boolean expected = false;
+        boolean expected = true;
         assertEquals(expected, res);
     }
 

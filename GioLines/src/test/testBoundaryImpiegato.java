@@ -30,13 +30,23 @@ public class testBoundaryImpiegato {
 	public void tearDown() throws Exception {
 	}
 
-    /*Test Case: 4-5 */
+    /*Test Case: 4 */
 	@Test
 	public void testCheckNumeroBagagli(){   
-		int NUMEROBAGAGLI = 3;
-		int NUMEROSEDILI = 4; 
+		int NUMEROBAGAGLI = -2;
+		int NUMEROSEDILI = 2; 
 		boolean res = BoundaryImpiegato.checkNumeroBagagli(NUMEROBAGAGLI, NUMEROSEDILI);
-        boolean expected = false;
+        boolean expected = true;
+        assertEquals(expected, res);
+    }
+
+	/*Test Case: 5 */
+	@Test
+	public void testCheckNumeroBagagli_zeros(){   
+		int NUMEROBAGAGLI = 4;
+		int NUMEROSEDILI = 2; 
+		boolean res = BoundaryImpiegato.checkNumeroBagagli(NUMEROBAGAGLI, NUMEROSEDILI);
+        boolean expected = true;
         assertEquals(expected, res);
     }
 
@@ -53,9 +63,9 @@ public class testBoundaryImpiegato {
 	/*Test Case: 6 */
 	@Test
 	public void testCheckDimensioneBagaglio(){    
-		String DIMENSIONIBAGAGLIO = "3x3x3";
+		String DIMENSIONIBAGAGLIO = "12-18,10";
 		boolean res = BoundaryImpiegato.checkDimensioneBagaglio(DIMENSIONIBAGAGLIO);
-        boolean expected = false;
+        boolean expected = true;
         assertEquals(expected, res);
     }
 
@@ -72,9 +82,9 @@ public class testBoundaryImpiegato {
 	/*Test Case: 8 */
 	@Test
 	public void testCheckPrezzoBigliettoMassimo(){    
-		float PREZZOBIGLIETTIMASSIMO = 12.3F;
+		float PREZZOBIGLIETTIMASSIMO = -0.5F;
 		boolean res = BoundaryImpiegato.checkPrezzoBigliettoMassimo(PREZZOBIGLIETTIMASSIMO);
-        boolean expected = false;
+        boolean expected = true;
         assertEquals(expected, res);
     }
 
