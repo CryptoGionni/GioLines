@@ -121,16 +121,16 @@ public class BoundaryImpiegato {
 
 	public static boolean checkDimensioneBagaglio(String tripla){
 		
-		if (tripla.contains("x")){			
-			if(tripla.substring(tripla.lastIndexOf("x")).contains("x")){
-				return false;
-			}else{
-				System.out.println("Inserire le dimensioni nel formato giusto, riprova...\n");
-			}
-		} else {
+		String regex = "\\d+(\\.\\d+)?x\\d+(\\.\\d+)?x\\d+(\\.\\d+)?";
+        
+		if (tripla.matches(regex)){
+			return false;
+		}else{
 			System.out.println("Inserire le dimensioni nel formato giusto, riprova...\n");
 		}
+		
 		return true;
+
 	}
 
 	/*Test Case: 8 */

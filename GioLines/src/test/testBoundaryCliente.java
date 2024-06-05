@@ -33,7 +33,7 @@ public class testBoundaryCliente {
 	/*Test Case: 1 */
 	@Test
 	public void testAcquistaBigliettoViaWeb_senzaBagaglio() {    
-        //BoundaryCliente._acquistaBigliettoViaWeb();
+        BoundaryCliente._acquistaBigliettoViaWeb();
     }
 
 	/************* *************/
